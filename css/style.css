@@ -3266,3 +3266,623 @@ html[lang="fa"] .hero-content {
         transition: none !important;
     }
 }
+
+/* ============================================================
+   SIMULATION CONTROLS + READOUTS — FINAL FIX
+============================================================ */
+.simulation-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(300px, .75fr);
+    gap: 22px;
+    align-items: stretch;
+}
+
+.simulation-controls {
+    min-width: 0;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.018);
+    padding: 22px;
+}
+
+.simulation-panel-heading {
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+}
+
+.simulation-control {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.control-row,
+.readout-line,
+.readout-state {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.control-row label,
+.readout-line,
+.readout-state {
+    color: rgba(255,255,255,.62);
+    font-size: 10px;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+}
+
+.control-row output {
+    color: var(--green);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.simulation-slider {
+    display: block;
+    width: 100%;
+    height: 28px;
+    margin: 12px 0 4px;
+    accent-color: var(--green);
+    cursor: pointer;
+}
+
+.slider-scale {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(255,255,255,.3);
+    font-size: 9px;
+    letter-spacing: .08em;
+}
+
+.simulation-toggle {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    cursor: pointer;
+}
+
+.simulation-toggle strong,
+.simulation-toggle small {
+    display: block;
+}
+
+.simulation-toggle strong {
+    color: rgba(255,255,255,.8);
+    font-size: 11px;
+    letter-spacing: .12em;
+}
+
+.simulation-toggle small {
+    margin-top: 5px;
+    color: rgba(255,255,255,.38);
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.simulation-toggle input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.toggle-track {
+    width: 48px;
+    height: 26px;
+    padding: 3px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 999px;
+    background: rgba(255,255,255,.06);
+    transition: .2s ease;
+}
+
+.toggle-track span {
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.5);
+    transition: transform .2s ease, background .2s ease;
+}
+
+.simulation-toggle input:checked + .toggle-track {
+    border-color: rgba(183,255,56,.6);
+    background: rgba(183,255,56,.12);
+}
+
+.simulation-toggle input:checked + .toggle-track span {
+    transform: translateX(20px);
+    background: var(--green);
+}
+
+.simulation-toggle:focus-within .toggle-track {
+    outline: 2px solid var(--green);
+    outline-offset: 3px;
+}
+
+.simulation-reset {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 18px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: transparent;
+    color: rgba(255,255,255,.72);
+    font: inherit;
+    font-size: 10px;
+    letter-spacing: .13em;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.simulation-reset:hover,
+.simulation-reset:focus-visible {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.simulation-readout,
+.simulation-events {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.simulation-readout-title {
+    margin-bottom: 14px;
+    color: rgba(255,255,255,.4);
+    font-size: 9px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.readout-state {
+    padding-bottom: 12px;
+    margin-bottom: 4px;
+    color: rgba(255,255,255,.45);
+}
+
+.readout-state strong {
+    color: var(--green);
+    font-size: 10px;
+    letter-spacing: .08em;
+}
+
+.readout-line {
+    padding: 7px 0;
+}
+
+.readout-line strong {
+    margin-left: auto;
+    color: rgba(255,255,255,.85);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 17px;
+}
+
+.event-log {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 30px;
+}
+
+.event {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: rgba(255,255,255,.52);
+    font-size: 9px;
+    line-height: 1.45;
+    letter-spacing: .06em;
+}
+
+.event i {
+    flex: 0 0 5px;
+    width: 5px;
+    height: 5px;
+    margin-top: 4px;
+    border-radius: 50%;
+    background: var(--green);
+}
+
+.path.active {
+    stroke: var(--green);
+    filter: url(#pathGlow);
+    opacity: 1;
+}
+
+.critical-node.active {
+    fill: rgba(183,255,56,.12);
+    stroke: var(--green);
+    filter: url(#pathGlow);
+}
+
+.load-particle {
+    fill: var(--green);
+    opacity: .95;
+}
+
+.pttlr-particle {
+    fill: #fff;
+}
+
+@media (max-width: 980px) {
+    .simulation-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .simulation-controls {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 22px;
+    }
+
+    .simulation-panel-heading,
+    .simulation-readout,
+    .simulation-events {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 640px) {
+    .simulation-section {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    .simulation-heading {
+        display: block;
+    }
+
+    .simulation-warning {
+        display: inline-block;
+        margin-top: 18px;
+    }
+
+    .simulation-controls {
+        display: block;
+        padding: 16px;
+    }
+
+    #loadVisualization {
+        min-height: 240px;
+    }
+
+    .svg-title {
+        font-size: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .toggle-track,
+    .toggle-track span,
+    .simulation-reset {
+        transition: none;
+    }
+}
+
+/* ============================================================
+   REGENYX — ENGINEERING SIMULATION MODEL
+   Visual states, load distribution and adaptive routing
+============================================================ */
+
+.simulation-model-note {
+    margin: 12px 0 0;
+    max-width: 48ch;
+    color: rgba(255,255,255,.42);
+    font-size: 10px;
+    line-height: 1.65;
+}
+
+.engineering-grid line {
+    stroke: rgba(255,255,255,.045);
+    stroke-width: 1;
+    stroke-dasharray: 3 9;
+}
+
+.force-arrow {
+    fill: var(--green);
+}
+
+#forceArrow {
+    stroke: var(--green);
+    stroke-width: 4;
+    opacity: .85;
+}
+
+.svg-force-value {
+    fill: var(--green);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: .04em;
+}
+
+.svg-title.small {
+    font-size: 17px;
+}
+
+.svg-micro {
+    fill: rgba(255,255,255,.28);
+    font-size: 8px;
+    letter-spacing: 1.3px;
+}
+
+.path.inbound,
+.path.decision {
+    stroke: rgba(255,255,255,.18);
+    stroke-width: 4;
+}
+
+.path.inbound.active,
+.path.decision.active {
+    stroke: var(--green);
+}
+
+.path.approach-active {
+    stroke-dasharray: 9 7;
+    animation: simulationPulse 1.1s linear infinite;
+}
+
+.path.caml-active {
+    stroke-width: 7;
+}
+
+.path.pttlr-active {
+    stroke-width: 6;
+}
+
+.path.primary {
+    transition: stroke-width .25s ease, opacity .25s ease, stroke .25s ease;
+}
+
+.path.camlr,
+.path.pttlr {
+    transition: stroke-width .25s ease, opacity .25s ease, stroke .25s ease;
+    opacity: .16;
+}
+
+.path.camlr.active {
+    opacity: 1;
+}
+
+.path.pttlr.active {
+    opacity: 1;
+}
+
+.critical-node {
+    fill: rgba(255,255,255,.025);
+    stroke: rgba(255,255,255,.24);
+    stroke-width: 2;
+    transition: fill .25s ease, stroke .25s ease, transform .25s ease;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.critical-node.active {
+    fill: rgba(183,255,56,.06);
+    stroke: rgba(183,255,56,.75);
+}
+
+.critical-node.transition {
+    fill: rgba(183,255,56,.14);
+    stroke: var(--green);
+    stroke-width: 3;
+    animation: nodePulse 1.25s ease-in-out infinite;
+}
+
+.svg-status-box rect {
+    fill: rgba(255,255,255,.018);
+    stroke: rgba(255,255,255,.10);
+    stroke-width: 1;
+}
+
+.svg-status-box.right rect {
+    fill: rgba(0,0,0,.12);
+}
+
+.svg-status-label {
+    fill: rgba(255,255,255,.35);
+    font-size: 8px;
+    letter-spacing: 1.4px;
+}
+
+.svg-status-value {
+    fill: var(--green);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: .04em;
+}
+
+.output-node {
+    transition: opacity .25s ease, stroke .25s ease;
+}
+
+.simulation-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 22px;
+    padding: 15px 20px;
+    border-top: 1px solid var(--border);
+    color: rgba(255,255,255,.45);
+    font-size: 9px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.simulation-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.legend-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.25);
+}
+
+.legend-dot.primary { background: var(--green); }
+.legend-dot.caml { background: rgba(183,255,56,.65); }
+.legend-dot.pttlr { background: rgba(255,255,255,.65); }
+
+.simulation-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-top: 18px;
+}
+
+.simulation-run,
+.simulation-reset {
+    min-height: 46px;
+    margin-top: 0;
+}
+
+.simulation-run {
+    border: 1px solid rgba(183,255,56,.5);
+    background: rgba(183,255,56,.06);
+    color: var(--green);
+    font: inherit;
+    font-size: 9px;
+    letter-spacing: .11em;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.simulation-run:hover,
+.simulation-run:focus-visible,
+.simulation-run.running {
+    background: rgba(183,255,56,.12);
+    border-color: var(--green);
+}
+
+.simulation-metrics {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.metric-row {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: 14px;
+    align-items: center;
+    padding: 8px 0;
+    color: rgba(255,255,255,.46);
+    font-size: 9px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.metric-row strong {
+    max-width: 190px;
+    color: rgba(255,255,255,.82);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 11px;
+    text-align: right;
+}
+
+.distribution-row {
+    display: grid;
+    grid-template-columns: 55px minmax(0,1fr) 45px;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 0;
+    color: rgba(255,255,255,.48);
+    font-size: 9px;
+    letter-spacing: .07em;
+}
+
+.distribution-row > strong {
+    color: rgba(255,255,255,.8);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 10px;
+    text-align: right;
+}
+
+.distribution-track {
+    height: 5px;
+    overflow: hidden;
+    background: rgba(255,255,255,.08);
+}
+
+.distribution-track i {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--green);
+    transition: width .3s ease;
+}
+
+.distribution-row:nth-of-type(3) .distribution-track i {
+    background: rgba(183,255,56,.62);
+}
+
+.distribution-row:nth-of-type(4) .distribution-track i {
+    background: rgba(255,255,255,.62);
+}
+
+.load-particle {
+    fill: var(--green);
+    opacity: .9;
+}
+
+.load-particle.caml-particle {
+    fill: rgba(183,255,56,.7);
+}
+
+.load-particle.pttlr-particle {
+    fill: #fff;
+}
+
+@keyframes simulationPulse {
+    to { stroke-dashoffset: -32; }
+}
+
+@keyframes nodePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+@media (max-width: 980px) {
+    .simulation-actions {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .simulation-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .simulation-legend {
+        gap: 10px 16px;
+        padding: 13px 15px;
+    }
+
+    .distribution-row {
+        grid-template-columns: 50px minmax(0,1fr) 40px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .path.approach-active,
+    .critical-node.transition {
+        animation: none;
+    }
+
+    .path.primary,
+    .path.camlr,
+    .path.pttlr,
+    .distribution-track i {
+        transition: none;
+    }
+}

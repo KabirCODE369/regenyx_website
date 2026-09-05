@@ -902,334 +902,167 @@
 >
 
     <div class="simulation-heading reveal">
-
         <div>
-
-            <div
-                class="section-label"
-                data-i18n="simulationLabel"
-            >
-                LIVE CONCEPTUAL MODEL
-            </div>
-
-
-            <h2 id="simulation-title"
-                data-i18n="simulationTitle"
-            >
-                Mechanical Intelligence
-            </h2>
-
-
-            <p data-i18n="simulationDescription">
-                Explore a simplified representation of adaptive
-                mechanical load routing.
-            </p>
-
+            <div class="section-label" data-i18n="simulationLabel">LIVE CONCEPTUAL MODEL</div>
+            <h2 id="simulation-title" data-i18n="simulationTitle">Mechanical Intelligence</h2>
+            <p data-i18n="simulationDescription">Explore how an adaptive structure can redistribute load when a constraint approaches its transition condition.</p>
         </div>
-
-
-        <div
-            class="simulation-warning"
-            data-i18n="simulationWarning"
-        >
-            CONCEPTUAL MODEL · NOT A VALIDATED SOLVER
-        </div>
-
+        <div class="simulation-warning" data-i18n="simulationWarning">CONCEPTUAL MODEL · NOT A VALIDATED SOLVER</div>
     </div>
-
 
     <div class="simulation-layout">
 
         <div class="simulation-visual reveal">
-
             <div class="simulation-topbar">
-
-                <span data-i18n="visualizationTitle">
-                    STRUCTURAL LOAD PATH
-                </span>
-
-                <strong id="simulationState">
-                    NORMAL
-                </strong>
-
+                <span data-i18n="visualizationTitle">ADAPTIVE LOAD-ROUTING MODEL</span>
+                <strong id="simulationState">NORMAL</strong>
             </div>
-
 
             <div class="svg-wrapper">
-
-                <svg
-                    id="loadVisualization"
-                    viewBox="0 0 1000 560"
-                    role="img"
-                    aria-label="Adaptive aerospace structural load path visualization"
-                >
+                <svg id="loadVisualization" viewBox="0 0 1000 560" role="img" aria-labelledby="simulationSvgTitle simulationSvgDesc">
+                    <title id="simulationSvgTitle">Regenyx conceptual adaptive load-routing model</title>
+                    <desc id="simulationSvgDesc">Applied load enters a primary structural path. As constraint utilization reaches the CAML threshold, load is progressively routed through an alternate path. When PTTLR is enabled, a further portion is redistributed into a transition path.</desc>
 
                     <defs>
-
-                        <filter
-                            id="particleGlow"
-                            x="-100%"
-                            y="-100%"
-                            width="300%"
-                            height="300%"
-                        >
-
-                            <feGaussianBlur
-                                stdDeviation="4"
-                                result="blur"
-                            />
-
-                            <feMerge>
-
-                                <feMergeNode in="blur"></feMergeNode>
-
-                                <feMergeNode in="SourceGraphic"></feMergeNode>
-
-                            </feMerge>
-
+                        <filter id="particleGlow" x="-100%" y="-100%" width="300%" height="300%">
+                            <feGaussianBlur stdDeviation="3" result="blur"/>
+                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                         </filter>
-
-
-                        <filter
-                            id="pathGlow"
-                            x="-50%"
-                            y="-50%"
-                            width="200%"
-                            height="200%"
-                        >
-
-                            <feGaussianBlur
-                                stdDeviation="5"
-                                result="blur"
-                            />
-
-                            <feMerge>
-
-                                <feMergeNode in="blur"></feMergeNode>
-
-                                <feMergeNode in="SourceGraphic"></feMergeNode>
-
-                            </feMerge>
-
+                        <filter id="pathGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" result="blur"/>
+                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                         </filter>
-
+                        <marker id="forceArrowMarker" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                            <path d="M0 0 L10 5 L0 10 Z" class="force-arrow"/>
+                        </marker>
                     </defs>
 
-
-                    <!-- STRUCTURAL FRAME -->
-
-                    <g class="frame">
-
-                        <rect
-                            x="35"
-                            y="220"
-                            width="120"
-                            height="100"
-                            rx="8"
-                            class="input-box"
-                        />
-
-                        <text
-                            x="95"
-                            y="265"
-                            text-anchor="middle"
-                            class="svg-title"
-                        >
-                            LOAD
-                        </text>
-
-                        <text
-                            x="95"
-                            y="288"
-                            text-anchor="middle"
-                            class="svg-caption"
-                        >
-                            INPUT
-                        </text>
-
-
-                        <!-- PRIMARY -->
-
-                        <path
-                            id="primaryPath"
-                            d="
-                                M155 270
-                                L300 270
-                                L445 270
-                                L575 270
-                                L700 190
-                                L880 190
-                            "
-                            class="path primary"
-                        />
-
-
-                        <!-- CAMLR -->
-
-                        <path
-                            id="camlrPath"
-                            d="
-                                M445 270
-                                L575 270
-                                L700 350
-                                L880 350
-                            "
-                            class="path camlr"
-                        />
-
-
-                        <!-- PTTLR -->
-
-                        <path
-                            id="pttlrPath"
-                            d="
-                                M575 270
-                                L650 270
-                                L730 450
-                                L880 450
-                            "
-                            class="path pttlr"
-                        />
-
-
-                        <!-- MEMBERS -->
-
-                        <line
-                            x1="445"
-                            y1="270"
-                            x2="700"
-                            y2="190"
-                            class="frame-member"
-                        />
-
-                        <line
-                            x1="445"
-                            y1="270"
-                            x2="700"
-                            y2="350"
-                            class="frame-member"
-                        />
-
-                        <line
-                            x1="575"
-                            y1="270"
-                            x2="730"
-                            y2="450"
-                            class="frame-member"
-                        />
-
-
-                        <!-- NODE -->
-
-                        <circle
-                            cx="445"
-                            cy="270"
-                            r="17"
-                            class="node"
-                        />
-
-
-                        <!-- CRITICAL NODE -->
-
-                        <circle
-                            id="criticalNode"
-                            cx="575"
-                            cy="270"
-                            r="30"
-                            class="critical-node"
-                        />
-
-                        <circle
-                            cx="575"
-                            cy="270"
-                            r="9"
-                            class="node-center"
-                        />
-
-
-                        <!-- OUTPUT -->
-
-                        <circle
-                            cx="880"
-                            cy="190"
-                            r="14"
-                            class="node"
-                        />
-
-                        <circle
-                            cx="880"
-                            cy="350"
-                            r="14"
-                            class="node"
-                        />
-
-                        <circle
-                            cx="880"
-                            cy="450"
-                            r="14"
-                            class="node"
-                        />
-
-
-                        <!-- LABELS -->
-
-                        <text
-                            x="575"
-                            y="215"
-                            text-anchor="middle"
-                            class="svg-label critical"
-                            data-i18n-svg="constraint"
-                        >
-                            CONSTRAINT
-                        </text>
-
-                        <text
-                            x="780"
-                            y="165"
-                            text-anchor="middle"
-                            class="svg-caption"
-                            data-i18n-svg="primaryPathLabel"
-                        >
-                            PRIMARY PATH
-                        </text>
-
-                        <text
-                            x="780"
-                            y="385"
-                            text-anchor="middle"
-                            class="svg-caption"
-                            data-i18n-svg="camlrPathLabel"
-                        >
-                            CAMLR PATH
-                        </text>
-
-                        <text
-                            x="790"
-                            y="490"
-                            text-anchor="middle"
-                            class="svg-caption"
-                            data-i18n-svg="pttlrPathLabel"
-                        >
-                            PTTLR STATE
-                        </text>
-
+                    <g class="engineering-grid" aria-hidden="true">
+                        <line x1="50" y1="105" x2="950" y2="105"/>
+                        <line x1="50" y1="465" x2="950" y2="465"/>
+                        <line x1="240" y1="105" x2="240" y2="465"/>
+                        <line x1="480" y1="105" x2="480" y2="465"/>
+                        <line x1="720" y1="105" x2="720" y2="465"/>
                     </g>
 
-
-                    <!-- PARTICLES -->
-
-                    <g
-                        id="particles"
-                        filter="url(#particleGlow)"
-                    >
-
+                    <g class="force-input">
+                        <line id="forceArrow" x1="100" y1="215" x2="100" y2="285" marker-end="url(#forceArrowMarker)"/>
+                        <text x="100" y="190" text-anchor="middle" class="svg-force-value" id="svgLoadValue">40%</text>
+                        <text x="100" y="315" text-anchor="middle" class="svg-caption" data-i18n-svg="appliedForce">APPLIED LOAD</text>
                     </g>
 
+                    <g class="structure">
+                        <rect x="145" y="235" width="100" height="70" rx="6" class="input-box"/>
+                        <text x="195" y="264" text-anchor="middle" class="svg-title small">LOAD</text>
+                        <text x="195" y="284" text-anchor="middle" class="svg-caption">INPUT</text>
+
+                        <path id="inboundPath" d="M245 270 L330 270 L415 270" class="path inbound"/>
+                        <path id="decisionPath" d="M415 270 L500 270" class="path decision"/>
+                        <path id="primaryPath" d="M415 270 L500 270 L610 190 L875 190" class="path primary"/>
+                        <path id="camlrPath" d="M415 270 L500 270 L610 350 L875 350" class="path camlr"/>
+                        <path id="pttlrPath" d="M500 270 L565 270 L660 445 L875 445" class="path pttlr"/>
+
+                        <line x1="415" y1="270" x2="610" y2="190" class="frame-member"/>
+                        <line x1="415" y1="270" x2="610" y2="350" class="frame-member"/>
+                        <line x1="500" y1="270" x2="660" y2="445" class="frame-member"/>
+
+                        <circle cx="415" cy="270" r="15" class="node"/>
+                        <circle id="criticalNode" cx="500" cy="270" r="34" class="critical-node"/>
+                        <circle cx="500" cy="270" r="10" class="node-center"/>
+
+                        <circle cx="875" cy="190" r="14" class="node output-node primary-output"/>
+                        <circle cx="875" cy="350" r="14" class="node output-node caml-output"/>
+                        <circle cx="875" cy="445" r="14" class="node output-node pttlr-output"/>
+
+                        <text x="500" y="212" text-anchor="middle" class="svg-label critical" data-i18n-svg="constraint">CONSTRAINT NODE</text>
+                        <text x="500" y="232" text-anchor="middle" class="svg-micro" data-i18n-svg="routingDecision">LOAD ROUTING DECISION</text>
+
+                        <text x="745" y="166" text-anchor="middle" class="svg-caption path-label-primary" data-i18n-svg="primaryPathLabel">PRIMARY STRUCTURE</text>
+                        <text x="745" y="326" text-anchor="middle" class="svg-caption path-label-caml" data-i18n-svg="camlrPathLabel">CAML ROUTING</text>
+                        <text x="745" y="421" text-anchor="middle" class="svg-caption path-label-pttlr" data-i18n-svg="pttlrPathLabel">PTTLR TRANSITION</text>
+                    </g>
+
+                    <g id="particles" filter="url(#particleGlow)"></g>
+
+                    <g class="svg-status-box">
+                        <rect x="55" y="380" width="235" height="62" rx="5"/>
+                        <text x="72" y="404" class="svg-status-label" data-i18n-svg="constraintUtilization">CONSTRAINT UTILIZATION</text>
+                        <text x="72" y="430" class="svg-status-value" id="svgUtilization">62%</text>
+                    </g>
+
+                    <g class="svg-status-box right">
+                        <rect x="710" y="55" width="235" height="62" rx="5"/>
+                        <text x="727" y="79" class="svg-status-label" data-i18n-svg="activeMechanism">ACTIVE MECHANISM</text>
+                        <text x="727" y="105" class="svg-status-value" id="svgMechanism">PRIMARY</text>
+                    </g>
                 </svg>
-
             </div>
 
+            <div class="simulation-legend" aria-label="Simulation legend">
+                <span><i class="legend-dot primary"></i><b data-i18n="legendPrimary">Primary load path</b></span>
+                <span><i class="legend-dot caml"></i><b data-i18n="legendCaml">CAML rerouting</b></span>
+                <span><i class="legend-dot pttlr"></i><b data-i18n="legendPttlr">PTTLR redistribution</b></span>
+            </div>
         </div>
+
+        <aside class="simulation-controls reveal" aria-label="Simulation controls">
+            <div class="simulation-panel-heading">
+                <div class="section-label" data-i18n="controlsTitle">SIMULATION CONTROLS</div>
+                <p class="simulation-model-note" data-i18n="modelNote">The model progressively changes load routing as the constraint utilization reaches the CAML transition threshold.</p>
+            </div>
+
+            <div class="simulation-control">
+                <div class="control-row">
+                    <label for="loadSlider" data-i18n="appliedLoad">APPLIED LOAD</label>
+                    <output id="loadDisplay" for="loadSlider">40</output>
+                </div>
+                <input id="loadSlider" class="simulation-slider" type="range" min="0" max="100" step="1" value="40" aria-label="Applied load">
+                <div class="slider-scale"><span>0%</span><span>100%</span></div>
+            </div>
+
+            <div class="simulation-control">
+                <div class="control-row">
+                    <label for="thresholdSlider" data-i18n="camlrThreshold">CAML THRESHOLD</label>
+                    <output id="thresholdDisplay" for="thresholdSlider">65</output>
+                </div>
+                <input id="thresholdSlider" class="simulation-slider" type="range" min="20" max="95" step="1" value="65" aria-label="CAML threshold">
+                <div class="slider-scale"><span>20%</span><span>95%</span></div>
+            </div>
+
+            <label class="simulation-toggle">
+                <span>
+                    <strong data-i18n="pttlrSwitch">PTTLR</strong>
+                    <small data-i18n="pttlrSwitchDescription">Enable phase-transition redistribution</small>
+                </span>
+                <input id="pttlrToggle" type="checkbox" aria-label="Enable PTTLR redistribution">
+                <span class="toggle-track" aria-hidden="true"><span></span></span>
+            </label>
+
+            <div class="simulation-actions">
+                <button id="runCycleButton" class="simulation-run" type="button" data-i18n="runCycle">RUN LOAD RAMP</button>
+                <button id="resetButton" class="simulation-reset" type="button" data-i18n="reset">RESET SIMULATION</button>
+            </div>
+
+            <div class="simulation-metrics">
+                <div class="simulation-readout-title" data-i18n="engineeringReadout">ENGINEERING READOUT</div>
+                <div class="metric-row"><span data-i18n="currentLoadLabel">APPLIED LOAD</span><strong id="currentLoad">40%</strong></div>
+                <div class="metric-row"><span data-i18n="utilizationLabel">CONSTRAINT UTILIZATION</span><strong id="constraintUtilization">62%</strong></div>
+                <div class="metric-row"><span data-i18n="marginLabel">REMAINING MARGIN</span><strong id="reserveMargin">38%</strong></div>
+                <div class="metric-row"><span data-i18n="mechanismLabel">ACTIVE MECHANISM</span><strong id="mechanismReadout">PRIMARY</strong></div>
+            </div>
+
+            <div class="simulation-readout">
+                <div class="simulation-readout-title" data-i18n="loadDistribution">LOAD DISTRIBUTION</div>
+                <div class="distribution-row"><span data-i18n="primaryPath">PRIMARY</span><div class="distribution-track"><i id="primaryBar"></i></div><strong id="primaryReadout">100%</strong></div>
+                <div class="distribution-row"><span data-i18n="camlrPath">CAML</span><div class="distribution-track"><i id="camlBar"></i></div><strong id="camlrReadout">0%</strong></div>
+                <div class="distribution-row"><span data-i18n="pttlrRedistribution">PTTLR</span><div class="distribution-track"><i id="pttlrBar"></i></div><strong id="pttlrReadout">0%</strong></div>
+            </div>
+
+            <div class="simulation-events">
+                <div class="simulation-readout-title" data-i18n="eventLog">EVENT LOG</div>
+                <div id="eventLog" class="event-log" aria-live="polite"></div>
+            </div>
+        </aside>
 
     </div>
 

@@ -1,12 +1,6 @@
 /* ============================================================
-   REGENYX AEROSPACE
-   MAIN JAVASCRIPT
-============================================================ */
-
-
-/* ============================================================
-   LANGUAGE DATA
-============================================================ */
+   REGENYX AEROSPACE — COMPLETE MAIN.JS
+   ============================================================ */
 
 const translations = {
 
@@ -608,1787 +602,1006 @@ const translations = {
 
 
 /* ============================================================
-   GLOBAL STATE
-============================================================ */
+   REGENYX AEROSPACE — COMPLETE MAIN.JS
+   CAML / PTTLR LIVE CONCEPTUAL MODEL
+   ============================================================ */
 
-let currentLanguage = "en";
+/* Keep the existing language dictionary, but add the simulation
+   interface labels used by the revised simulation controls. */
+Object.assign(translations.en, {
+    appliedForce: "APPLIED LOAD",
+    routingDecision: "LOAD ROUTING DECISION",
+    constraintUtilization: "CONSTRAINT UTILIZATION",
+    activeMechanism: "ACTIVE MECHANISM",
+    legendPrimary: "Primary load path",
+    legendCaml: "CAML rerouting",
+    legendPttlr: "PTTLR redistribution",
+    modelNote: "The model progressively changes load routing as constraint utilization reaches the CAML transition threshold.",
+    runCycle: "RUN LOAD RAMP",
+    engineeringReadout: "ENGINEERING READOUT",
+    currentLoadLabel: "APPLIED LOAD",
+    utilizationLabel: "CONSTRAINT UTILIZATION",
+    marginLabel: "REMAINING MARGIN",
+    mechanismLabel: "ACTIVE MECHANISM",
+    loadDistribution: "LOAD DISTRIBUTION",
+    controlsTitle: "SIMULATION CONTROLS",
+    appliedLoad: "APPLIED LOAD",
+    camlrThreshold: "CAML THRESHOLD",
+    pttlrSwitch: "PTTLR",
+    pttlrSwitchDescription: "Enable phase-transition redistribution",
+    reset: "RESET SIMULATION",
+    liveReadout: "LIVE READOUT",
+    state: "STATE",
+    primaryPath: "PRIMARY PATH",
+    camlrPath: "CAML PATH",
+    pttlrRedistribution: "PTTLR REDISTRIBUTION",
+    eventLog: "EVENT LOG"
+});
 
-let currentSimulationState = "NORMAL";
-
-let previousSimulationState = "NORMAL";
-
-let animationFrame = null;
+Object.assign(translations.fr, {
+    appliedForce: "CHARGE APPLIQUÉE",
+    routingDecision: "DÉCISION DE ROUTAGE",
+    constraintUtilization: "UTILISATION DE LA CONTRAINTE",
+    activeMechanism: "MÉCANISME ACTIF",
+    legendPrimary: "Chemin de charge principal",
+    legendCaml: "Routage CAML",
+    legendPttlr: "Redistribution PTTLR",
+    modelNote: "Le modèle modifie progressivement le routage de charge lorsque l'utilisation de la contrainte atteint le seuil de transition CAML.",
+    runCycle: "LANCER LA RAMPE DE CHARGE",
+    engineeringReadout: "LECTURE TECHNIQUE",
+    currentLoadLabel: "CHARGE APPLIQUÉE",
+    utilizationLabel: "UTILISATION DE LA CONTRAINTE",
+    marginLabel: "MARGE RESTANTE",
+    mechanismLabel: "MÉCANISME ACTIF",
+    loadDistribution: "RÉPARTITION DE LA CHARGE",
+    controlsTitle: "COMMANDES DE SIMULATION",
+    appliedLoad: "CHARGE APPLIQUÉE",
+    camlrThreshold: "SEUIL CAML",
+    pttlrSwitch: "PTTLR",
+    pttlrSwitchDescription: "Activer la redistribution par transition de phase",
+    reset: "RÉINITIALISER LA SIMULATION",
+    liveReadout: "LECTURE EN DIRECT",
+    state: "ÉTAT",
+    primaryPath: "CHEMIN PRINCIPAL",
+    camlrPath: "CHEMIN CAML",
+    pttlrRedistribution: "REDISTRIBUTION PTTLR",
+    eventLog: "JOURNAL DES ÉVÉNEMENTS"
+});
 
 
 /* ============================================================
-   DOM READY
-============================================================ */
+   GLOBAL STATE
+   ============================================================ */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        try {
-            initializeLanguage();
-        } catch (error) {
-            console.error(
-                "Language initialization error:",
-                error
-            );
-        }
+let currentLanguage = "en";
+let simulationInitialized = false;
+let simulationAnimationFrame = null;
 
 
-        try {
-            initializeHeader();
-        } catch (error) {
-            console.error(
-                "Header initialization error:",
-                error
-            );
-        }
+/* ============================================================
+   HELPERS
+   ============================================================ */
 
+function prefersReducedMotion() {
+    return window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
-        try {
-            initializeNavigation();
-        } catch (error) {
-            console.error(
-                "Navigation initialization error:",
-                error
-            );
-        }
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
 
-
-        try {
-            initializeRevealAnimations();
-        } catch (error) {
-            console.error(
-                "Reveal animation error:",
-                error
-            );
-        }
-
-
-        try {
-            initializeVideo();
-        } catch (error) {
-            console.error(
-                "Video initialization error:",
-                error
-            );
-        }
-
-
-        try {
-            initializeSimulation();
-        } catch (error) {
-            console.error(
-                "Simulation initialization error:",
-                error
-            );
-        }
-
-
-        initializeFooter();
-
-    }
-);
+function safeNumber(value, fallback) {
+    const number = Number(value);
+    return Number.isFinite(number) ? number : fallback;
+}
 
 
 /* ============================================================
    LANGUAGE
-============================================================ */
+   ============================================================ */
 
 function detectLanguage() {
+    const saved = localStorage.getItem("regenyx-language");
 
-    const saved =
-        localStorage.getItem(
-            "regenyx-language"
-        );
-
-
-    if (
-        saved === "fr" ||
-        saved === "en"
-    ) {
-
+    if (saved === "fr" || saved === "en") {
         return saved;
-
     }
-
 
     const browserLanguage =
-        navigator.language ||
-        navigator.userLanguage ||
-        "en";
+        navigator.language || navigator.userLanguage || "en";
 
-
-    if (
-        browserLanguage
-            .toLowerCase()
-            .startsWith("fr")
-    ) {
-
-        return "fr";
-
-    }
-
-
-    return "en";
-
+    return browserLanguage.toLowerCase().startsWith("fr")
+        ? "fr"
+        : "en";
 }
 
+function applyLanguage(language) {
+    const dictionary = translations[language];
+    if (!dictionary) return;
 
-/* ============================================================
-   INITIALIZE LANGUAGE
-============================================================ */
+    currentLanguage = language;
+    document.documentElement.lang = language;
+
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.dataset.i18n;
+        if (dictionary[key] !== undefined) {
+            element.textContent = dictionary[key];
+        }
+    });
+
+    document.querySelectorAll("[data-i18n-svg]").forEach(element => {
+        const key = element.dataset.i18nSvg;
+        if (dictionary[key] !== undefined) {
+            element.textContent = dictionary[key];
+        }
+    });
+
+    const indicator = document.getElementById("currentLanguage");
+    if (indicator) indicator.textContent = language.toUpperCase();
+
+    document.title = language === "fr"
+        ? "Regenyx Aerospace — Structures Intelligentes"
+        : "Regenyx Aerospace — Intelligent Structures";
+}
+
+function setGoogleLanguage(language) {
+    const target = String(language || "en").toLowerCase();
+
+    localStorage.setItem("regenyx-language", target);
+
+    if (target === "en") {
+        document.cookie = "googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        document.cookie = "googtrans=;path=/;domain=" +
+            window.location.hostname +
+            ";expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    } else {
+        document.cookie = "googtrans=/en/" + target + ";path=/";
+    }
+
+    window.location.reload();
+}
+
+function changeLanguage(language) {
+    const nativeLanguages = ["en", "fr"];
+
+    if (nativeLanguages.includes(language)) {
+        localStorage.setItem("regenyx-language", language);
+        applyLanguage(language);
+        return;
+    }
+
+    setGoogleLanguage(language);
+}
 
 function initializeLanguage() {
+    applyLanguage(detectLanguage());
 
-    currentLanguage =
-        detectLanguage();
+    const button = document.getElementById("languageButton");
+    const menu = document.getElementById("languageMenu");
 
+    if (!button || !menu) return;
 
-    applyLanguage(
-        currentLanguage
-    );
+    if (button.dataset.languageReady === "true") return;
+    button.dataset.languageReady = "true";
 
+    button.addEventListener("click", event => {
+        event.stopPropagation();
 
-    const languageButton =
-        document.getElementById(
-            "languageButton"
-        );
+        const open = !menu.classList.contains("open");
+        menu.classList.toggle("open", open);
+        button.setAttribute("aria-expanded", String(open));
+    });
 
-    const languageMenu =
-        document.getElementById(
-            "languageMenu"
-        );
-
-
-    if (
-        !languageButton ||
-        !languageMenu
-    ) {
-
-        return;
-
-    }
-
-
-    languageButton.addEventListener(
-        "click",
-        event => {
-
+    menu.querySelectorAll("[data-language]").forEach(item => {
+        item.addEventListener("click", event => {
             event.stopPropagation();
+            changeLanguage(item.dataset.language);
+            menu.classList.remove("open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
 
-            const isOpen =
-                languageMenu.classList.contains(
-                    "open"
-                );
-
-            languageMenu.classList.toggle(
-                "open",
-                !isOpen
-            );
-
-            languageButton.setAttribute(
-                "aria-expanded",
-                String(!isOpen)
-            );
-
+    document.addEventListener("click", event => {
+        if (!menu.contains(event.target) && event.target !== button) {
+            menu.classList.remove("open");
+            button.setAttribute("aria-expanded", "false");
         }
-    );
-
-
-    languageMenu
-        .querySelectorAll(
-            "[data-language]"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const language =
-                        button.dataset.language;
-
-                    changeLanguage(
-                        language
-                    );
-
-                    languageMenu.classList.remove(
-                        "open"
-                    );
-
-                    languageButton.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                }
-            );
-
-        });
-
-
-    document.addEventListener(
-        "click",
-        () => {
-
-            languageMenu.classList.remove(
-                "open"
-            );
-
-            languageButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   CHANGE LANGUAGE
-============================================================ */
-
-function changeLanguage(
-    language
-) {
-
-    if (
-        !translations[language]
-    ) {
-
-        return;
-
-    }
-
-
-    currentLanguage =
-        language;
-
-
-    localStorage.setItem(
-        "regenyx-language",
-        language
-    );
-
-
-    applyLanguage(
-        language
-    );
-
-}
-
-
-/* ============================================================
-   APPLY LANGUAGE
-============================================================ */
-
-function applyLanguage(
-    language
-) {
-
-    const dictionary =
-        translations[language];
-
-
-    if (!dictionary) {
-
-        return;
-
-    }
-
-
-    document.documentElement.lang =
-        language;
-
-
-    document
-        .querySelectorAll(
-            "[data-i18n]"
-        )
-        .forEach(element => {
-
-            const key =
-                element.dataset.i18n;
-
-
-            if (
-                dictionary[key] !== undefined
-            ) {
-
-                element.textContent =
-                    dictionary[key];
-
-            }
-
-        });
-
-
-    document
-        .querySelectorAll(
-            "[data-i18n-svg]"
-        )
-        .forEach(element => {
-
-            const key =
-                element.dataset.i18nSvg;
-
-
-            if (
-                dictionary[key] !== undefined
-            ) {
-
-                element.textContent =
-                    dictionary[key];
-
-            }
-
-        });
-
-
-    const languageIndicator =
-        document.getElementById(
-            "currentLanguage"
-        );
-
-
-    if (languageIndicator) {
-
-        languageIndicator.textContent =
-            language.toUpperCase();
-
-    }
-
-
-    document.title =
-        language === "fr"
-            ? "Regenyx Aerospace — Structures Intelligentes"
-            : "Regenyx Aerospace — Intelligent Structures";
-
+    });
 }
 
 
 /* ============================================================
    HEADER
-============================================================ */
+   ============================================================ */
 
 function initializeHeader() {
+    const header = document.getElementById("siteHeader");
+    if (!header) return;
 
-    const header =
-        document.getElementById(
-            "siteHeader"
-        );
+    const update = () => {
+        header.classList.toggle("scrolled", window.scrollY > 30);
+    };
 
-
-    if (!header) {
-
-        return;
-
-    }
-
-
-    function updateHeader() {
-
-        if (
-            window.scrollY > 30
-        ) {
-
-            header.classList.add(
-                "scrolled"
-            );
-
-        } else {
-
-            header.classList.remove(
-                "scrolled"
-            );
-
-        }
-
-    }
-
-
-    updateHeader();
-
-
-    window.addEventListener(
-        "scroll",
-        updateHeader,
-        {
-            passive: true
-        }
-    );
-
+    update();
+    window.addEventListener("scroll", update, { passive: true });
 }
 
 
 /* ============================================================
-   NAVIGATION
-============================================================ */
+   NAVIGATION + MOBILE MENU
+   ============================================================ */
 
 function initializeNavigation() {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", event => {
+            const targetId = link.getAttribute("href");
+            if (!targetId || targetId === "#") return;
 
-    document
-        .querySelectorAll(
-            'a[href^="#"]'
-        )
-        .forEach(link => {
+            const target = document.querySelector(targetId);
+            if (!target) return;
 
-            link.addEventListener(
-                "click",
-                event => {
+            event.preventDefault();
+            target.scrollIntoView({
+                behavior: prefersReducedMotion() ? "auto" : "smooth",
+                block: "start"
+            });
 
-                    const targetId =
-                        link.getAttribute(
-                            "href"
-                        );
+            const mobileMenu = document.getElementById("mobileMenu");
+            const mobileButton = document.getElementById("mobileMenuButton");
 
-
-                    if (
-                        !targetId ||
-                        targetId === "#"
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    const target =
-                        document.querySelector(
-                            targetId
-                        );
-
-
-                    if (!target) {
-
-                        return;
-
-                    }
-
-
-                    event.preventDefault();
-
-
-                    target.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-
-                }
-            );
-
+            if (mobileMenu) mobileMenu.classList.remove("open");
+            if (mobileButton) {
+                mobileButton.classList.remove("open");
+                mobileButton.setAttribute("aria-expanded", "false");
+            }
         });
+    });
 
+    const button = document.getElementById("mobileMenuButton");
+    const menu = document.getElementById("mobileMenu");
+
+    if (!button || !menu) return;
+    if (button.dataset.mobileReady === "true") return;
+    button.dataset.mobileReady = "true";
+
+    const close = () => {
+        menu.classList.remove("open");
+        button.classList.remove("open");
+        button.setAttribute("aria-expanded", "false");
+    };
+
+    button.addEventListener("click", event => {
+        event.stopPropagation();
+        const open = !menu.classList.contains("open");
+        menu.classList.toggle("open", open);
+        button.classList.toggle("open", open);
+        button.setAttribute("aria-expanded", String(open));
+    });
+
+    menu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", close);
+    });
+
+    document.addEventListener("click", event => {
+        if (!menu.contains(event.target) && event.target !== button) {
+            close();
+        }
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) close();
+    }, { passive: true });
 }
 
 
 /* ============================================================
    REVEAL ANIMATIONS
-============================================================ */
+   ============================================================ */
 
 function initializeRevealAnimations() {
+    const elements = document.querySelectorAll(".reveal");
+    if (!elements.length) return;
 
-    const elements =
-        document.querySelectorAll(
-            ".reveal"
-        );
-
-
-    if (!elements.length) {
-
+    if (prefersReducedMotion() || !("IntersectionObserver" in window)) {
+        elements.forEach(element => element.classList.add("visible"));
         return;
-
     }
 
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.10,
+        rootMargin: "0px 0px -40px 0px"
+    });
 
-    const reducedMotion =
-        window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        ).matches;
-
-
-    if (reducedMotion) {
-
-        elements.forEach(
-            element =>
-                element.classList.add(
-                    "visible"
-                )
-        );
-
-        return;
-
-    }
-
-
-    if (
-        !("IntersectionObserver" in window)
-    ) {
-
-        elements.forEach(
-            element =>
-                element.classList.add(
-                    "visible"
-                )
-        );
-
-        return;
-
-    }
-
-
-    const observer =
-        new IntersectionObserver(
-            entries => {
-
-                entries.forEach(
-                    entry => {
-
-                        if (
-                            !entry.isIntersecting
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        entry.target.classList.add(
-                            "visible"
-                        );
-
-
-                        observer.unobserve(
-                            entry.target
-                        );
-
-                    }
-                );
-
-            },
-            {
-                threshold: 0.10
-            }
-        );
-
-
-    elements.forEach(
-        element =>
-            observer.observe(element)
-    );
-
+    elements.forEach(element => observer.observe(element));
 }
 
 
 /* ============================================================
    VIDEO
-============================================================ */
+   ============================================================ */
 
 function initializeVideo() {
-
-    const video =
-        document.getElementById(
-            "heroVideo"
-        );
-
-
-    if (!video) {
-
-        return;
-
-    }
-
+    const video = document.getElementById("heroVideo") || document.querySelector("video");
+    if (!video) return;
 
     video.muted = true;
-
     video.autoplay = true;
-
     video.loop = true;
-
     video.playsInline = true;
 
+    video.setAttribute("muted", "");
+    video.setAttribute("autoplay", "");
+    video.setAttribute("loop", "");
+    video.setAttribute("playsinline", "");
 
-    const attemptPlay =
-        () => {
-
-            const playPromise =
-                video.play();
-
-
-            if (
-                playPromise &&
-                typeof playPromise.catch ===
-                "function"
-            ) {
-
-                playPromise.catch(
-                    error => {
-
-                        console.warn(
-                            "Autoplay was blocked:",
-                            error
-                        );
-
-                    }
-                );
-
-            }
-
-        };
-
-
-    if (
-        video.readyState >= 2
-    ) {
-
-        attemptPlay();
-
-    }
-
-
-    video.addEventListener(
-        "loadeddata",
-        attemptPlay,
-        {
-            once: true
+    const attemptPlay = () => {
+        const promise = video.play();
+        if (promise && typeof promise.catch === "function") {
+            promise.catch(() => {});
         }
-    );
+    };
 
+    attemptPlay();
+    video.addEventListener("loadeddata", attemptPlay, { once: true });
+    video.addEventListener("canplay", attemptPlay, { once: true });
 
-    video.addEventListener(
-        "canplay",
-        attemptPlay,
-        {
-            once: true
-        }
-    );
-
+    document.addEventListener("visibilitychange", () => {
+        if (!document.hidden && video.paused) attemptPlay();
+    });
 }
 
 
 /* ============================================================
-   SIMULATION
-============================================================ */
+   CAML / PTTLR SIMULATION
+   ============================================================
+
+   Conceptual behavior:
+
+   NORMAL
+      Applied load is comfortably below the CAML threshold.
+      100% of the conceptual load follows the primary path.
+
+   CONSTRAINT APPROACH
+      Load approaches the threshold.
+      The primary path remains active, while the constraint node
+      visually indicates that the architecture is approaching
+      its transition condition.
+
+   CAML ACTIVATION
+      Applied load reaches/exceeds the threshold.
+      CAML activates an alternate load path and transfers load
+      away from the conventional primary path.
+
+   PTTLR TRANSITION
+      With PTTLR enabled, the transferred load is distributed
+      hierarchically instead of simply switching from A to B.
+
+   This is intentionally a conceptual visualization, not a
+   finite-element solver or validated structural analysis.
+   ============================================================ */
 
 function initializeSimulation() {
+    if (simulationInitialized) return;
 
-    const loadSlider =
-        document.getElementById(
-            "loadSlider"
-        );
+    const loadSlider = document.getElementById("loadSlider");
+    const thresholdSlider = document.getElementById("thresholdSlider");
+    const pttlrToggle = document.getElementById("pttlrToggle");
+    const resetButton = document.getElementById("resetButton");
+    const runCycleButton = document.getElementById("runCycleButton");
 
-    const thresholdSlider =
-        document.getElementById(
-            "thresholdSlider"
-        );
-
-    const pttlrToggle =
-        document.getElementById(
-            "pttlrToggle"
-        );
-
-    const resetButton =
-        document.getElementById(
-            "resetButton"
-        );
-
-
-    if (
-        !loadSlider ||
-        !thresholdSlider ||
-        !pttlrToggle
-    ) {
-
-        console.warn(
-            "Simulation controls not found."
-        );
-
+    if (!loadSlider || !thresholdSlider || !pttlrToggle) {
+        console.warn("Regenyx simulation: controls not found.");
         return;
-
     }
 
-
+    const svgNS = "http://www.w3.org/2000/svg";
     const elements = {
-
-        loadDisplay:
-            document.getElementById(
-                "loadDisplay"
-            ),
-
-        thresholdDisplay:
-            document.getElementById(
-                "thresholdDisplay"
-            ),
-
-        state:
-            document.getElementById(
-                "simulationState"
-            ),
-
-        stateReadout:
-            document.getElementById(
-                "stateReadout"
-            ),
-
-        primary:
-            document.getElementById(
-                "primaryReadout"
-            ),
-
-        camlr:
-            document.getElementById(
-                "camlrReadout"
-            ),
-
-        pttlr:
-            document.getElementById(
-                "pttlrReadout"
-            ),
-
-        primaryPath:
-            document.getElementById(
-                "primaryPath"
-            ),
-
-        camlrPath:
-            document.getElementById(
-                "camlrPath"
-            ),
-
-        pttlrPath:
-            document.getElementById(
-                "pttlrPath"
-            ),
-
-        criticalNode:
-            document.getElementById(
-                "criticalNode"
-            ),
-
-        particles:
-            document.getElementById(
-                "particles"
-            ),
-
-        eventLog:
-            document.getElementById(
-                "eventLog"
-            )
-
+        loadDisplay: document.getElementById("loadDisplay"),
+        thresholdDisplay: document.getElementById("thresholdDisplay"),
+        state: document.getElementById("simulationState"),
+        stateReadout: document.getElementById("stateReadout"),
+        primaryReadout: document.getElementById("primaryReadout"),
+        camlrReadout: document.getElementById("camlrReadout"),
+        pttlrReadout: document.getElementById("pttlrReadout"),
+        currentLoad: document.getElementById("currentLoad"),
+        utilization: document.getElementById("constraintUtilization"),
+        reserveMargin: document.getElementById("reserveMargin"),
+        mechanism: document.getElementById("mechanismReadout"),
+        primaryBar: document.getElementById("primaryBar"),
+        camlBar: document.getElementById("camlBar"),
+        pttlrBar: document.getElementById("pttlrBar"),
+        svgLoadValue: document.getElementById("svgLoadValue"),
+        svgUtilization: document.getElementById("svgUtilization"),
+        svgMechanism: document.getElementById("svgMechanism"),
+        inboundPath: document.getElementById("inboundPath"),
+        decisionPath: document.getElementById("decisionPath"),
+        primaryPath: document.getElementById("primaryPath"),
+        camlrPath: document.getElementById("camlrPath"),
+        pttlrPath: document.getElementById("pttlrPath"),
+        criticalNode: document.getElementById("criticalNode"),
+        particles: document.getElementById("particles"),
+        container: document.getElementById("loadVisualization"),
+        eventLog: document.getElementById("eventLog")
     };
 
-
-    if (
-        !elements.primaryPath ||
-        !elements.camlrPath ||
-        !elements.pttlrPath ||
-        !elements.criticalNode ||
-        !elements.particles
-    ) {
-
-        console.warn(
-            "Simulation SVG elements are incomplete."
-        );
-
+    if (!elements.inboundPath || !elements.decisionPath ||
+        !elements.primaryPath || !elements.camlrPath ||
+        !elements.pttlrPath || !elements.particles) {
+        console.warn("Regenyx simulation: SVG elements are incomplete.");
         return;
-
     }
 
+    simulationInitialized = true;
 
-    /* ========================================================
-       MODEL
-    ======================================================== */
+    const model = {
+        defaultLoad: 40,
+        defaultThreshold: 65,
+        warningBand: 15,
+        particles: 36,
+        animationSpeed: 0.00024
+    };
+
+    const state = {
+        load: clamp(safeNumber(loadSlider.value, model.defaultLoad), 0, 100),
+        threshold: clamp(safeNumber(thresholdSlider.value, model.defaultThreshold), 20, 95),
+        pttlr: Boolean(pttlrToggle.checked),
+        name: "NORMAL",
+        mechanism: "PRIMARY",
+        primary: 100,
+        caml: 0,
+        pttlrPath: 0,
+        utilization: 0,
+        margin: 100,
+        transitionProgress: 0,
+        pathLengths: {
+            inbound: 0,
+            decision: 0,
+            primary: 0,
+            caml: 0,
+            pttlr: 0
+        },
+        particles: []
+    };
+
+    let previousState = null;
+    let cycleFrame = null;
+    let cycleRunning = false;
+
+    function measurePaths() {
+        [
+            ["inbound", elements.inboundPath],
+            ["decision", elements.decisionPath],
+            ["primary", elements.primaryPath],
+            ["caml", elements.camlrPath],
+            ["pttlr", elements.pttlrPath]
+        ].forEach(([name, path]) => {
+            try {
+                state.pathLengths[name] = path.getTotalLength();
+            } catch (error) {
+                state.pathLengths[name] = 0;
+            }
+        });
+    }
 
     function getModel() {
+        const load = clamp(state.load, 0, 100);
+        const threshold = clamp(state.threshold, 20, 95);
+        const warningStart = Math.max(0, threshold - model.warningBand);
 
-        const load =
-            Number(
-                loadSlider.value
-            );
+        state.utilization = threshold > 0
+            ? (load / threshold) * 100
+            : 100;
+        state.margin = Math.max(0, 100 - state.utilization);
 
-        const threshold =
-            Number(
-                thresholdSlider.value
-            );
-
-        const pttlr =
-            pttlrToggle.checked;
-
-
-        const criticalLimit =
-            threshold * 0.85;
-
-
-        if (
-            load >= threshold &&
-            pttlr
-        ) {
-
-            return {
-
-                state:
-                    "PTTLR REDISTRIBUTION",
-
-                primary: 25,
-
-                camlr: 40,
-
-                pttlr: 35
-
-            };
-
-        }
-
-
-        if (
-            load >= threshold
-        ) {
-
-            return {
-
-                state:
-                    "CAMLR ROUTING",
-
-                primary: 35,
-
-                camlr: 65,
-
-                pttlr: 0
-
-            };
-
-        }
-
-
-        if (
-            load >= criticalLimit
-        ) {
-
-            return {
-
-                state:
-                    "CRITICAL",
-
-                primary: 100,
-
-                camlr: 0,
-
-                pttlr: 0
-
-            };
-
-        }
-
-
-        return {
-
-            state:
-                "NORMAL",
-
-            primary: 100,
-
-            camlr: 0,
-
-            pttlr: 0
-
-        };
-
-    }
-
-
-    /* ========================================================
-       EVENT LOG
-    ======================================================== */
-
-    function addEvent(
-        message
-    ) {
-
-        if (!elements.eventLog) {
-
+        if (load < warningStart) {
+            state.name = "NORMAL";
+            state.mechanism = "PRIMARY";
+            state.primary = 100;
+            state.caml = 0;
+            state.pttlrPath = 0;
+            state.transitionProgress = 0;
             return;
-
         }
 
-
-        const event =
-            document.createElement(
-                "div"
+        if (load < threshold) {
+            state.name = "CONSTRAINT APPROACH";
+            state.mechanism = "PRIMARY · APPROACHING THRESHOLD";
+            state.primary = 100;
+            state.caml = 0;
+            state.pttlrPath = 0;
+            state.transitionProgress = clamp(
+                (load - warningStart) / Math.max(threshold - warningStart, 1),
+                0,
+                1
             );
+            return;
+        }
 
-        event.className =
-            "event active";
-
-
-        const dot =
-            document.createElement(
-                "i"
-            );
-
-
-        const text =
-            document.createElement(
-                "span"
-            );
-
-
-        text.textContent =
-            message;
-
-
-        event.appendChild(dot);
-
-        event.appendChild(text);
-
-
-        elements.eventLog.prepend(
-            event
+        /*
+         * Once utilization reaches 100%, CAML begins routing load.
+         * The transfer is continuous rather than an artificial on/off jump.
+         */
+        const transfer = clamp(
+            (load - threshold) / Math.max(100 - threshold, 1),
+            0,
+            1
         );
+        state.transitionProgress = transfer;
 
-
-        const allEvents =
-            elements.eventLog.querySelectorAll(
-                ".event"
-            );
-
-
-        if (
-            allEvents.length > 5
-        ) {
-
-            allEvents[
-                allEvents.length - 1
-            ].remove();
-
+        if (!state.pttlr) {
+            state.name = "CAML ACTIVE";
+            state.mechanism = "CAML · LOAD REROUTING";
+            state.caml = Math.round(15 + (50 * transfer));
+            state.primary = 100 - state.caml;
+            state.pttlrPath = 0;
+            return;
         }
 
+        /* PTTLR adds a third destination and progressively increases its share. */
+        state.name = "PTTLR ACTIVE";
+        state.mechanism = "CAML + PTTLR · REDISTRIBUTION";
+        state.pttlrPath = Math.round(15 + (20 * transfer));
+        state.caml = Math.round(25 + (15 * transfer));
+        state.primary = 100 - state.caml - state.pttlrPath;
     }
 
-
-    function getEventText(
-        state
-    ) {
-
-        if (
-            currentLanguage === "fr"
-        ) {
-
-            switch (state) {
-
-                case "NORMAL":
-                    return "CHEMIN DE CHARGE NORMAL";
-
-                case "CRITICAL":
-                    return "ÉTAT CRITIQUE DÉTECTÉ";
-
-                case "CAMLR ROUTING":
-                    return "CHEMIN ALTERNATIF CAMLR ACTIVÉ";
-
-                case "PTTLR REDISTRIBUTION":
-                    return "REDISTRIBUTION PTTLR ACTIVÉE";
-
-            }
-
-        }
-
-
-        switch (state) {
-
-            case "NORMAL":
-                return "NORMAL LOAD PATH";
-
-            case "CRITICAL":
-                return "CRITICAL STATE DETECTED";
-
-            case "CAMLR ROUTING":
-                return "CAMLR ALTERNATE PATH ACTIVATED";
-
-            case "PTTLR REDISTRIBUTION":
-                return "PTTLR LOAD REDISTRIBUTION ACTIVATED";
-
-            default:
-                return state;
-
-        }
-
+    function setText(element, value) {
+        if (element) element.textContent = String(value);
     }
 
+    function updateReadout() {
+        const load = Math.round(state.load);
+        const threshold = Math.round(state.threshold);
+        const utilization = Math.round(state.utilization);
+        const margin = Math.round(state.margin);
 
-    /* ========================================================
-       UPDATE
-    ======================================================== */
+        setText(elements.loadDisplay, load);
+        setText(elements.thresholdDisplay, threshold);
+        setText(elements.stateReadout, state.name);
+        setText(elements.primaryReadout, `${Math.round(state.primary)}%`);
+        setText(elements.camlrReadout, `${Math.round(state.caml)}%`);
+        setText(elements.pttlrReadout, `${Math.round(state.pttlrPath)}%`);
+        setText(elements.currentLoad, `${load}%`);
+        setText(elements.utilization, `${utilization}%`);
+        setText(elements.reserveMargin, `${margin}%`);
+        setText(elements.mechanism, state.mechanism);
+        setText(elements.svgLoadValue, `${load}%`);
+        setText(elements.svgUtilization, `${utilization}%`);
+        setText(elements.svgMechanism, state.mechanism);
 
-    function updateSimulation() {
-
-        const model =
-            getModel();
-
-
-        currentSimulationState =
-            model.state;
-
-
-        if (
-            elements.loadDisplay
-        ) {
-
-            elements.loadDisplay.textContent =
-                loadSlider.value;
-
+        if (elements.state) {
+            elements.state.textContent = state.name;
+            elements.state.dataset.state = state.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
         }
 
-
-        if (
-            elements.thresholdDisplay
-        ) {
-
-            elements.thresholdDisplay.textContent =
-                thresholdSlider.value;
-
+        if (elements.container) {
+            elements.container.dataset.state = state.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+            elements.container.style.setProperty("--load-intensity", String(state.load / 100));
         }
 
-
-        if (
-            elements.state
-        ) {
-
-            elements.state.textContent =
-                model.state;
-
-        }
-
-
-        if (
-            elements.stateReadout
-        ) {
-
-            elements.stateReadout.textContent =
-                model.state;
-
-        }
-
-
-        if (
-            elements.primary
-        ) {
-
-            elements.primary.textContent =
-                model.primary;
-
-        }
-
-
-        if (
-            elements.camlr
-        ) {
-
-            elements.camlr.textContent =
-                model.camlr;
-
-        }
-
-
-        if (
-            elements.pttlr
-        ) {
-
-            elements.pttlr.textContent =
-                model.pttlr;
-
-        }
-
-
-        /* Remove all active states */
-
-        elements.primaryPath
-            .classList
-            .remove(
-                "active"
-            );
-
-        elements.camlrPath
-            .classList
-            .remove(
-                "active"
-            );
-
-        elements.pttlrPath
-            .classList
-            .remove(
-                "active"
-            );
-
-        elements.criticalNode
-            .classList
-            .remove(
-                "active"
-            );
-
-
-        /* NORMAL */
-
-        if (
-            model.state ===
-            "NORMAL"
-        ) {
-
-            elements.primaryPath
-                .classList
-                .add(
-                    "active"
-                );
-
-        }
-
-
-        /* CRITICAL */
-
-        if (
-            model.state ===
-            "CRITICAL"
-        ) {
-
-            elements.primaryPath
-                .classList
-                .add(
-                    "active"
-                );
-
-            elements.criticalNode
-                .classList
-                .add(
-                    "active"
-                );
-
-        }
-
-
-        /* CAMLR */
-
-        if (
-            model.state ===
-            "CAMLR ROUTING"
-        ) {
-
-            elements.primaryPath
-                .classList
-                .add(
-                    "active"
-                );
-
-            elements.camlrPath
-                .classList
-                .add(
-                    "active"
-                );
-
-            elements.criticalNode
-                .classList
-                .add(
-                    "active"
-                );
-
-        }
-
-
-        /* PTTLR */
-
-        if (
-            model.state ===
-            "PTTLR REDISTRIBUTION"
-        ) {
-
-            elements.primaryPath
-                .classList
-                .add(
-                    "active"
-                );
-
-            elements.camlrPath
-                .classList
-                .add(
-                    "active"
-                );
-
-            elements.pttlrPath
-                .classList
-                .add(
-                    "active"
-                );
-
-            elements.criticalNode
-                .classList
-                .add(
-                    "active"
-                );
-
-        }
-
-
-        /* EVENT */
-
-        if (
-            currentSimulationState !==
-            previousSimulationState
-        ) {
-
-            addEvent(
-                getEventText(
-                    currentSimulationState
-                )
-            );
-
-            previousSimulationState =
-                currentSimulationState;
-
-        }
-
+        if (elements.primaryBar) elements.primaryBar.style.width = `${state.primary}%`;
+        if (elements.camlBar) elements.camlBar.style.width = `${state.caml}%`;
+        if (elements.pttlrBar) elements.pttlrBar.style.width = `${state.pttlrPath}%`;
     }
 
+    function setPathState(path, active, type) {
+        if (!path) return;
+        path.classList.remove("active", "caml-active", "pttlr-active", "approach-active");
+        if (!active) return;
+        path.classList.add("active");
+        if (type === "caml") path.classList.add("caml-active");
+        if (type === "pttlr") path.classList.add("pttlr-active");
+        if (type === "approach") path.classList.add("approach-active");
+    }
 
-    /* ========================================================
-       PARTICLES
-    ======================================================== */
+    function updateVisuals() {
+        getModel();
 
-    const particleCount = 18;
+        const utilization = state.utilization;
+        const approaching = utilization >= 85 && utilization < 100;
+        const camlActive = state.caml > 0;
+        const pttlrActive = state.pttlrPath > 0;
 
-    const particleData = [];
+        setPathState(elements.inboundPath, true, "primary");
+        setPathState(elements.decisionPath, true, "primary");
+        setPathState(elements.primaryPath, state.primary > 0, "primary");
+        setPathState(elements.camlrPath, camlActive, "caml");
+        setPathState(elements.pttlrPath, pttlrActive, "pttlr");
 
+        /* Path thickness is a visual proxy for relative load share. */
+        elements.primaryPath.style.strokeWidth = `${Math.max(3, 3 + (state.primary * 0.055))}`;
+        elements.camlrPath.style.strokeWidth = camlActive
+            ? `${Math.max(3, 3 + (state.caml * 0.065))}`
+            : "3";
+        elements.pttlrPath.style.strokeWidth = pttlrActive
+            ? `${Math.max(3, 3 + (state.pttlrPath * 0.07))}`
+            : "3";
+
+        if (approaching) {
+            elements.primaryPath.classList.add("approach-active");
+            elements.decisionPath.classList.add("approach-active");
+        }
+
+        if (elements.criticalNode) {
+            elements.criticalNode.classList.toggle("active", utilization >= 85);
+            elements.criticalNode.classList.toggle("transition", camlActive);
+        }
+
+        updateReadout();
+        updateParticleClasses();
+        logEvent();
+    }
+
+    function logEvent(force = false) {
+        if (!elements.eventLog) return;
+        if (!force && previousState === state.name) return;
+
+        previousState = state.name;
+        const entry = document.createElement("div");
+        entry.className = "simulation-event";
+
+        const time = new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
+
+        const timeSpan = document.createElement("span");
+        timeSpan.className = "event-time";
+        timeSpan.textContent = time;
+
+        const stateSpan = document.createElement("span");
+        stateSpan.className = "event-state";
+        stateSpan.textContent = `${state.name} · P ${Math.round(state.primary)} / C ${Math.round(state.caml)} / T ${Math.round(state.pttlrPath)}`;
+
+        entry.append(timeSpan, stateSpan);
+        elements.eventLog.prepend(entry);
+
+        Array.from(elements.eventLog.children)
+            .slice(6)
+            .forEach(child => child.remove());
+    }
 
     function createParticles() {
+        elements.particles.innerHTML = "";
+        state.particles = [];
 
-        elements.particles.innerHTML =
-            "";
+        for (let i = 0; i < model.particles; i++) {
+            const particle = document.createElementNS(svgNS, "circle");
+            particle.classList.add("load-particle");
+            particle.setAttribute("r", i % 5 === 0 ? "3.4" : "2.5");
+            particle.dataset.index = String(i);
+            particle.dataset.seed = String(i / model.particles);
+            elements.particles.appendChild(particle);
+            state.particles.push(particle);
+        }
+    }
 
-        particleData.length = 0;
+    function routeForParticle(index) {
+        const ratio = index / Math.max(state.particles.length - 1, 1);
+        const camlShare = state.caml / 100;
+        const pttlrShare = state.pttlrPath / 100;
+        const primaryShare = state.primary / 100;
 
-
-        for (
-            let i = 0;
-            i < particleCount;
-            i++
-        ) {
-
-            const circle =
-                document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "circle"
-                );
-
-
-            circle.setAttribute(
-                "r",
-                i % 3 === 0
-                    ? "5"
-                    : "3.5"
-            );
-
-
-            circle.classList.add(
-                "load-particle"
-            );
-
-
-            elements.particles.appendChild(
-                circle
-            );
-
-
-            particleData.push({
-
-                element:
-                    circle,
-
-                offset:
-                    i / particleCount,
-
-                speed:
-                    0.00022 +
-                    Math.random() * 0.00012
-
-            });
-
+        if (ratio < primaryShare) {
+            return {
+                name: "primary",
+                segments: [elements.inboundPath, elements.primaryPath],
+                speed: 1.0
+            };
         }
 
+        if (ratio < primaryShare + camlShare) {
+            return {
+                name: "caml",
+                segments: [elements.inboundPath, elements.decisionPath, elements.camlrPath],
+                speed: 1.05
+            };
+        }
+
+        if (pttlrShare > 0) {
+            return {
+                name: "pttlr",
+                segments: [elements.inboundPath, elements.decisionPath, elements.pttlrPath],
+                speed: 1.1
+            };
+        }
+
+        return {
+            name: "primary",
+            segments: [elements.inboundPath, elements.primaryPath],
+            speed: 1.0
+        };
     }
 
-
-    /* ========================================================
-       PARTICLE ANIMATION
-    ======================================================== */
-
-    function animate(
-        time
-    ) {
-
-        const model =
-            getModel();
-
-
-        const primary =
-            elements.primaryPath;
-
-        const camlr =
-            elements.camlrPath;
-
-        const pttlr =
-            elements.pttlrPath;
-
-
-        const primaryLength =
-            primary.getTotalLength();
-
-        const camlrLength =
-            camlr.getTotalLength();
-
-        const pttlrLength =
-            pttlr.getTotalLength();
-
-
-        particleData.forEach(
-            (particle, index) => {
-
-                const cycle =
-                    (
-                        time *
-                        particle.speed +
-                        particle.offset
-                    ) % 1;
-
-
-                let path;
-
-                let progress;
-
-
-                /* =========================================
-                   NORMAL / CRITICAL
-                ========================================== */
-
-                if (
-                    model.state ===
-                    "NORMAL" ||
-                    model.state ===
-                    "CRITICAL"
-                ) {
-
-                    path =
-                        primary;
-
-                    progress =
-                        cycle;
-
-                    particle.element
-                        .classList
-                        .remove(
-                            "pttlr-particle"
-                        );
-
-                }
-
-
-                /* =========================================
-                   CAMLR
-                ========================================== */
-
-                else if (
-                    model.state ===
-                    "CAMLR ROUTING"
-                ) {
-
-                    /*
-                       First section:
-                       load travels to constraint.
-
-                       Second section:
-                       load follows CAMLR path.
-                    */
-
-                    if (
-                        cycle < 0.43
-                    ) {
-
-                        path =
-                            primary;
-
-                        progress =
-                            cycle / 0.43;
-
-                    } else {
-
-                        path =
-                            camlr;
-
-                        progress =
-                            (
-                                cycle - 0.43
-                            ) / 0.57;
-
-                    }
-
-
-                    particle.element
-                        .classList
-                        .remove(
-                            "pttlr-particle"
-                        );
-
-                }
-
-
-                /* =========================================
-                   PTTLR
-                ========================================== */
-
-                else {
-
-                    /*
-                       All particles first reach
-                       the constraint.
-
-                       Then particles are divided:
-
-                       1/3 → PTTLR
-                       2/3 → CAMLR
-                    */
-
-                    if (
-                        cycle < 0.40
-                    ) {
-
-                        path =
-                            primary;
-
-                        progress =
-                            cycle / 0.40;
-
-                        particle.element
-                            .classList
-                            .remove(
-                                "pttlr-particle"
-                            );
-
-                    } else {
-
-                        if (
-                            index % 3 === 0
-                        ) {
-
-                            path =
-                                pttlr;
-
-                            progress =
-                                (
-                                    cycle - 0.40
-                                ) / 0.60;
-
-                            particle.element
-                                .classList
-                                .add(
-                                    "pttlr-particle"
-                                );
-
-                        } else {
-
-                            path =
-                                camlr;
-
-                            progress =
-                                (
-                                    cycle - 0.40
-                                ) / 0.60;
-
-                            particle.element
-                                .classList
-                                .remove(
-                                    "pttlr-particle"
-                                );
-
-                        }
-
-                    }
-
-                }
-
-
-                let length;
-
-
-                if (
-                    path === primary
-                ) {
-
-                    length =
-                        primaryLength;
-
-                } else if (
-                    path === camlr
-                ) {
-
-                    length =
-                        camlrLength;
-
-                } else {
-
-                    length =
-                        pttlrLength;
-
-                }
-
-
-                const point =
-                    path.getPointAtLength(
-                        Math.max(
-                            0,
-                            Math.min(
-                                1,
-                                progress
-                            )
-                        ) *
-                        length
-                    );
-
-
-                particle.element.setAttribute(
-                    "cx",
-                    point.x
-                );
-
-
-                particle.element.setAttribute(
-                    "cy",
-                    point.y
-                );
-
+    function getSegmentLengths(segments) {
+        return segments.map(path => {
+            try {
+                return path.getTotalLength();
+            } catch (error) {
+                return 0;
             }
-        );
-
-
-        animationFrame =
-            requestAnimationFrame(
-                animate
-            );
-
+        });
     }
 
+    function pointAlongRoute(segments, lengths, progress) {
+        const total = lengths.reduce((sum, value) => sum + value, 0);
+        if (!total) return null;
 
-    /* ========================================================
-       EVENTS
-    ======================================================== */
+        let distance = progress * total;
 
-    loadSlider.addEventListener(
-        "input",
-        updateSimulation
-    );
-
-
-    thresholdSlider.addEventListener(
-        "input",
-        updateSimulation
-    );
-
-
-    pttlrToggle.addEventListener(
-        "change",
-        updateSimulation
-    );
-
-
-    if (resetButton) {
-
-        resetButton.addEventListener(
-            "click",
-            () => {
-
-                loadSlider.value =
-                    "40";
-
-                thresholdSlider.value =
-                    "65";
-
-                pttlrToggle.checked =
-                    false;
-
-
-                currentSimulationState =
-                    "NORMAL";
-
-                previousSimulationState =
-                    "NORMAL";
-
-
-                if (
-                    elements.eventLog
-                ) {
-
-                    elements.eventLog.innerHTML =
-                        "";
-
+        for (let i = 0; i < segments.length; i++) {
+            const length = lengths[i];
+            if (distance <= length || i === segments.length - 1) {
+                try {
+                    return segments[i].getPointAtLength(clamp(distance, 0, length));
+                } catch (error) {
+                    return null;
                 }
-
-
-                addEvent(
-                    currentLanguage === "fr"
-                        ? "SYSTÈME RÉINITIALISÉ"
-                        : "SYSTEM RESET"
-                );
-
-
-                updateSimulation();
-
             }
-        );
+            distance -= length;
+        }
 
+        return null;
     }
 
+    function updateParticleClasses() {
+        state.particles.forEach((particle, index) => {
+            const route = routeForParticle(index);
+            particle.classList.remove("caml-particle", "pttlr-particle");
+            if (route.name === "caml") particle.classList.add("caml-particle");
+            if (route.name === "pttlr") particle.classList.add("pttlr-particle");
+            particle.setAttribute("visibility", "visible");
+        });
+    }
 
-    /* ========================================================
-       START
-    ======================================================== */
+    function animate(timestamp) {
+        const reduced = prefersReducedMotion();
+
+        state.particles.forEach((particle, index) => {
+            const route = routeForParticle(index);
+            const lengths = getSegmentLengths(route.segments);
+            const seed = safeNumber(particle.dataset.seed, index / model.particles);
+            const phase = reduced
+                ? ((seed * 0.82) + 0.08) % 1
+                : ((timestamp * model.animationSpeed * route.speed) + seed) % 1;
+
+            const point = pointAlongRoute(route.segments, lengths, phase);
+            if (!point) {
+                particle.setAttribute("visibility", "hidden");
+                return;
+            }
+
+            particle.setAttribute("visibility", "visible");
+            particle.setAttribute("cx", point.x);
+            particle.setAttribute("cy", point.y);
+
+            /* Particle intensity follows the applied load. */
+            particle.style.opacity = String(0.35 + (0.65 * (state.load / 100)));
+        });
+
+        if (!reduced) {
+            simulationAnimationFrame = requestAnimationFrame(animate);
+        }
+    }
+
+    function stopCycle() {
+        cycleRunning = false;
+        if (cycleFrame) {
+            cancelAnimationFrame(cycleFrame);
+            cycleFrame = null;
+        }
+        if (runCycleButton) {
+            runCycleButton.classList.remove("running");
+            runCycleButton.textContent = currentLanguage === "fr"
+                ? "LANCER LA RAMPE DE CHARGE"
+                : "RUN LOAD RAMP";
+        }
+    }
+
+    function runLoadCycle() {
+        if (cycleRunning) {
+            stopCycle();
+            return;
+        }
+
+        cycleRunning = true;
+        if (runCycleButton) {
+            runCycleButton.classList.add("running");
+            runCycleButton.textContent = currentLanguage === "fr" ? "ARRÊTER LA RAMPE" : "STOP LOAD RAMP";
+        }
+
+        const start = performance.now();
+        const duration = 9000;
+        const startLoad = 0;
+        const endLoad = 100;
+
+        function step(now) {
+            if (!cycleRunning) return;
+
+            const progress = clamp((now - start) / duration, 0, 1);
+            /* Smooth ramp: 0 → 100 → 0, so the activation and recovery are both visible. */
+            const cycleValue = progress < 0.65
+                ? progress / 0.65
+                : 1 - ((progress - 0.65) / 0.35);
+            const nextLoad = startLoad + (endLoad - startLoad) * clamp(cycleValue, 0, 1);
+
+            state.load = nextLoad;
+            loadSlider.value = String(Math.round(nextLoad));
+            updateVisuals();
+
+            if (progress < 1) {
+                cycleFrame = requestAnimationFrame(step);
+            } else {
+                stopCycle();
+            }
+        }
+
+        cycleFrame = requestAnimationFrame(step);
+    }
+
+    function reset() {
+        stopCycle();
+        loadSlider.value = String(model.defaultLoad);
+        thresholdSlider.value = String(model.defaultThreshold);
+        pttlrToggle.checked = false;
+
+        state.load = model.defaultLoad;
+        state.threshold = model.defaultThreshold;
+        state.pttlr = false;
+        previousState = null;
+
+        updateVisuals();
+        logEvent(true);
+    }
+
+    function syncLoad() {
+        state.load = clamp(safeNumber(loadSlider.value, model.defaultLoad), 0, 100);
+        updateVisuals();
+    }
+
+    function syncThreshold() {
+        state.threshold = clamp(safeNumber(thresholdSlider.value, model.defaultThreshold), 20, 95);
+        /* A threshold above the current load remains valid; the model simply stays below transition. */
+        updateVisuals();
+    }
+
+    loadSlider.addEventListener("input", syncLoad);
+    thresholdSlider.addEventListener("input", syncThreshold);
+    pttlrToggle.addEventListener("change", () => {
+        state.pttlr = Boolean(pttlrToggle.checked);
+        updateVisuals();
+    });
+
+    if (resetButton) resetButton.addEventListener("click", reset);
+    if (runCycleButton) runCycleButton.addEventListener("click", runLoadCycle);
 
     createParticles();
+    measurePaths();
+    updateVisuals();
 
-    updateSimulation();
-
-
-    const reducedMotion =
-        window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        ).matches;
-
-
-    if (!reducedMotion) {
-
-        animationFrame =
-            requestAnimationFrame(
-                animate
-            );
-
+    if (prefersReducedMotion()) {
+        animate(0);
+    } else {
+        simulationAnimationFrame = requestAnimationFrame(animate);
     }
 
+    let resizeTimer = null;
+    window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            measurePaths();
+            updateVisuals();
+        }, 150);
+    }, { passive: true });
+
+    window.RegenyxSimulation = {
+        reset,
+        runLoadCycle,
+        getState: () => ({
+            load: Math.round(state.load),
+            threshold: Math.round(state.threshold),
+            pttlr: state.pttlr,
+            state: state.name,
+            mechanism: state.mechanism,
+            primaryPath: Math.round(state.primary),
+            camlPath: Math.round(state.caml),
+            pttlrRedistribution: Math.round(state.pttlrPath),
+            constraintUtilization: Math.round(state.utilization),
+            remainingMargin: Math.round(state.margin)
+        })
+    };
 }
 
 
 /* ============================================================
    FOOTER
-============================================================ */
-
-function initializeFooter() {
-
-    const footerYear =
-        document.getElementById(
-            "footerYear"
-        );
-
-
-    if (footerYear) {
-
-        footerYear.textContent =
-            new Date().getFullYear();
-
-    }
-
-}
-
-/* ============================================================
-   FINAL LANGUAGE + MOBILE NAVIGATION PATCH
    ============================================================ */
 
-(function () {
-    const nativeLanguages = new Set(["en", "fr"]);
+function initializeFooter() {
+    const year = new Date().getFullYear();
 
-    function setGoogleLanguage(language) {
-        const target = String(language || "en").toLowerCase();
+    document.querySelectorAll("[data-current-year]").forEach(element => {
+        element.textContent = year;
+    });
 
-        if (target === "en") {
-            document.cookie = "googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-            document.cookie = "googtrans=;path=/;domain=" + window.location.hostname + ";expires=Thu, 01 Jan 1970 00:00:00 GMT";
-            localStorage.setItem("regenyx-language", "en");
-            window.location.reload();
-            return;
-        }
+    const currentYear = document.getElementById("currentYear");
+    if (currentYear) currentYear.textContent = year;
+}
 
-        document.cookie = "googtrans=/en/" + target + ";path=/";
-        localStorage.setItem("regenyx-language", target);
-        window.location.reload();
-    }
 
-    function setupMobileMenu() {
-        const button = document.getElementById("mobileMenuButton");
-        const menu = document.getElementById("mobileMenu");
+/* ============================================================
+   SUCCESS POPUP
+   ============================================================ */
 
-        if (!button || !menu) return;
+function initializeSuccessPopup() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("success") !== "true") return;
 
-        const close = () => {
-            menu.classList.remove("open");
-            button.classList.remove("open");
-            button.setAttribute("aria-expanded", "false");
-        };
+    const popup =
+        document.getElementById("success-popup") ||
+        document.getElementById("successPopup");
 
-        button.addEventListener("click", function (event) {
-            event.stopPropagation();
-            const open = !menu.classList.contains("open");
-            menu.classList.toggle("open", open);
-            button.classList.toggle("open", open);
-            button.setAttribute("aria-expanded", String(open));
-        });
+    if (!popup) return;
 
-        menu.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", close);
-        });
+    popup.style.display = "flex";
+    popup.classList.add("visible");
 
-        document.addEventListener("click", function (event) {
-            if (!menu.contains(event.target) && event.target !== button) {
-                close();
-            }
-        });
+    setTimeout(() => {
+        popup.classList.remove("visible");
+    }, 7000);
+}
 
-        window.addEventListener("resize", function () {
-            if (window.innerWidth > 768) close();
-        });
-    }
 
-    function setupFinalLanguageMenu() {
-        const button = document.getElementById("languageButton");
-        const menu = document.getElementById("languageMenu");
-        const indicator = document.getElementById("currentLanguage");
+/* ============================================================
+   GOOGLE TRANSLATE CALLBACK
+   ============================================================ */
 
-        if (!button || !menu) return;
+window.googleTranslateElementInit = function () {
+    if (!window.google || !google.translate) return;
 
-        menu.querySelectorAll("[data-language]").forEach(item => {
-            item.addEventListener("click", function () {
-                const language = item.dataset.language;
-                if (indicator) indicator.textContent = language.toUpperCase();
+    const element = document.getElementById("google_translate_element");
+    if (!element || element.dataset.initialized === "true") return;
 
-                menu.classList.remove("open");
-                button.setAttribute("aria-expanded", "false");
+    element.dataset.initialized = "true";
 
-                if (nativeLanguages.has(language)) {
-                    currentLanguage = language;
-                    localStorage.setItem("regenyx-language", language);
-                    applyLanguage(language);
-                    return;
-                }
+    new google.translate.TranslateElement({
+        pageLanguage: "en",
+        includedLanguages:
+            "en,fr,de,es,it,pt,nl,pl,cs,sk,sl,hu,ro,bg,hr,sr,bs,mk,el,da,sv,no,fi,et,lv,lt,is,ga,mt,cy,ca,eu,gl,sq,be,ru,uk,tr,ar,fa",
+        autoDisplay: false
+    }, "google_translate_element");
+};
 
-                setGoogleLanguage(language);
-            });
-        });
-    }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        setupMobileMenu();
-        setupFinalLanguageMenu();
+/* ============================================================
+   DOM READY
+   ============================================================ */
 
-        const saved = localStorage.getItem("regenyx-language");
-        if (saved && saved.length === 2) {
-            const indicator = document.getElementById("currentLanguage");
-            if (indicator) indicator.textContent = saved.toUpperCase();
+document.addEventListener("DOMContentLoaded", () => {
+    const initializers = [
+        ["language", initializeLanguage],
+        ["header", initializeHeader],
+        ["navigation", initializeNavigation],
+        ["reveal", initializeRevealAnimations],
+        ["video", initializeVideo],
+        ["simulation", initializeSimulation],
+        ["success popup", initializeSuccessPopup],
+        ["footer", initializeFooter]
+    ];
+
+    initializers.forEach(([name, initializer]) => {
+        try {
+            initializer();
+        } catch (error) {
+            console.error(`Regenyx ${name} initialization error:`, error);
         }
     });
-})();
+}, { once: true });
