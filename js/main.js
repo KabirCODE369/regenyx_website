@@ -1,1607 +1,2885 @@
 /* ============================================================
-   REGENYX AEROSPACE — COMPLETE MAIN.JS
-   ============================================================ */
-
-const translations = {
-
-    en: {
-
-        navTechnology: "Technology",
-        navEngineering: "Engineering",
-        navApplications: "Applications",
-        navRoadmap: "Roadmap",
-        navCollaborate: "Collaborate",
-
-        heroEyebrow: "DEEP-TECH AEROSPACE",
-
-        heroTitle1: "Engineering",
-        heroTitle2: "Intelligent Structures",
-        heroTitle3: "for the Future of Flight Missions.",
-
-        heroDescription:
-            "Adaptive aerospace structures engineered to autonomously reroute mechanical loads, redistribute stresses and enhance structural survivability.",
-
-        heroButton1: "Explore Technology",
-        heroButton2: "Engineering Approach",
-
-        heroStatus:
-            "ADAPTIVE STRUCTURAL INTELLIGENCE",
-
-        scroll:
-            "SCROLL TO EXPLORE",
-
-        thesisLabel:
-            "STRUCTURAL THESIS",
-
-        thesisTitle1:
-            "What if a structure could",
-
-        thesisTitle2:
-            "respond to its own loading?",
-
-        thesisParagraph1:
-            "Conventional aerospace structures are designed around predefined load paths. When those paths become overloaded, the structure depends primarily on passive margins and failure containment.",
-
-        thesisParagraph2:
-            "Regenyx Aerospace explores a different paradigm: structures whose architecture can respond to changing mechanical states by activating alternative load paths and redistributing mechanical demand.",
-
-        camlrFull:
-            "Constraint-Activated Metastable Load Routing Mechanism",
-
-        pttlrFull:
-            "Phase-Transition-Triggered Load Redistribution",
-
-        technologyLabel:
-            "CORE TECHNOLOGY",
-
-        technologyTitle1:
-            "Mechanical intelligence",
-
-        technologyTitle2:
-            "embedded in architecture.",
-
-        technologyIntro:
-            "Hierarchical structural architectures combined with state-dependent load-routing mechanisms.",
-
-        camlrSubtitle:
-            "Constraint-Activated Metastable Load Routing Mechanism",
-
-        camlrDescription:
-            "A structural mechanism in which a critical constraint state activates an alternate mechanical load path.",
-
-        pttlrSubtitle:
-            "Phase-Transition-Triggered Load Redistribution",
-
-        pttlrDescription:
-            "A structural state transition that redistributes mechanical demand across the hierarchy.",
-
-        loadRouting:
-            "LOAD ROUTING",
-
-        loadRedistribution:
-            "LOAD REDISTRIBUTION",
-
-        mechanismLabel:
-            "MECHANISM",
-
-        mechanismTitle1:
-            "From applied load",
-
-        mechanismTitle2:
-            "to adaptive response.",
-
-        mechanism1Title:
-            "LOAD",
-
-        mechanism1Text:
-            "External mechanical loading enters the structural hierarchy.",
-
-        mechanism2Title:
-            "CRITICAL STATE",
-
-        mechanism2Text:
-            "A structural constraint approaches its critical mechanical condition.",
-
-        mechanism3Title:
-            "TRANSITION",
-
-        mechanism3Text:
-            "The architecture changes its active mechanical state.",
-
-        mechanism4Title:
-            "REDISTRIBUTION",
-
-        mechanism4Text:
-            "Mechanical demand is redistributed through alternative structural pathways.",
-
-        simulationLabel:
-            "LIVE CONCEPTUAL MODEL",
-
-        simulationTitle:
-            "Mechanical Intelligence",
-
-        simulationDescription:
-            "Explore a simplified representation of adaptive mechanical load routing.",
-
-        simulationWarning:
-            "CONCEPTUAL MODEL · NOT A VALIDATED SOLVER",
-
-        visualizationTitle:
-            "STRUCTURAL LOAD PATH",
-
-        constraint:
-            "CONSTRAINT",
-
-        primaryPathLabel:
-            "PRIMARY PATH",
-
-        camlrPathLabel:
-            "CAMLR PATH",
-
-        pttlrPathLabel:
-            "PTTLR STATE",
-
-        legendPrimary:
-            "Primary",
-
-        legendCamlr:
-            "CAMLR",
-
-        legendPttlr:
-            "PTTLR",
-
-        controlsTitle:
-            "SIMULATION CONTROLS",
-
-        appliedLoad:
-            "APPLIED LOAD",
-
-        camlrThreshold:
-            "CAMLR THRESHOLD",
-
-        pttlrSwitch:
-            "PTTLR",
-
-        pttlrSwitchDescription:
-            "Enable phase-transition redistribution",
-
-        reset:
-            "RESET SIMULATION",
-
-        liveReadout:
-            "LIVE READOUT",
-
-        state:
-            "STATE",
-
-        primaryPath:
-            "PRIMARY PATH",
-
-        camlrPath:
-            "CAMLR PATH",
-
-        pttlrRedistribution:
-            "PTTLR REDISTRIBUTION",
-
-        eventLog:
-            "EVENT LOG",
-
-        systemInitialized:
-            "SYSTEM INITIALIZED",
-
-        engineeringLabel:
-            "COMPUTATIONAL ENGINEERING",
-
-        engineeringTitle1:
-            "Designed through",
-
-        engineeringTitle2:
-            "physics, computation and simulation.",
-
-        engineering1Title:
-            "MULTIPHYSICS",
-
-        engineering1Text:
-            "Coupled mechanical, thermal and material-state behaviour.",
-
-        engineering2Title:
-            "FINITE ELEMENT ANALYSIS",
-
-        engineering2Text:
-            "Structural response, stress concentration, nonlinear behaviour and damage evolution.",
-
-        engineering3Title:
-            "TOPOLOGY OPTIMIZATION",
-
-        engineering3Text:
-            "Computational generation of hierarchical architectures and adaptive load paths.",
-
-        engineering4Title:
-            "MATERIAL INTELLIGENCE",
-
-        engineering4Text:
-            "Advanced material systems designed to interact with structural architecture.",
-
-        applicationsLabel:
-            "APPLICATIONS",
-
-        applicationsTitle1:
-            "Built for demanding",
-
-        applicationsTitle2:
-            "flight environments.",
-
-        application1Title:
-            "LAUNCH VEHICLES",
-
-        application1Text:
-            "Adaptive structural architectures for extreme launch loading environments.",
-
-        application2Title:
-            "SPACECRAFT",
-
-        application2Text:
-            "Lightweight structures capable of managing changing mission load cases.",
-
-        application3Title:
-            "AEROSPACE SYSTEMS",
-
-        application3Text:
-            "Hierarchical structures designed for improved damage tolerance and survivability.",
-
-        roadmapLabel:
-            "TECHNOLOGY MATURATION",
-
-        roadmapTitle1:
-            "From fundamental concept",
-
-        roadmapTitle2:
-            "to flight-relevant technology.",
-
-        roadmap1Title:
-            "FUNDAMENTAL PRINCIPLE",
-
-        roadmap1Text:
-            "Establish the physical basis of adaptive load routing.",
-
-        roadmap2Title:
-            "COMPUTATIONAL VALIDATION",
-
-        roadmap2Text:
-            "Numerical modelling and structural simulation.",
-
-        roadmap3Title:
-            "EXPERIMENTAL DEMONSTRATION",
-
-        roadmap3Text:
-            "Physical demonstrators and laboratory validation.",
-
-        contactLabel:
-            "COLLABORATION",
-
-        contactTitle1:
-            "Let's engineer the",
-
-        contactTitle2:
-            "next structural paradigm.",
-
-        contactText:
-            "Regenyx Aerospace is developing partnerships across aerospace engineering, advanced materials, computational mechanics and space systems.",
-
-        contactButton:
-            "Start a Conversation",
-
-        footerText:
-            "Engineering Intelligent Structures for the Future of Flight Missions."
-
-    },
-
-
-    fr: {
-
-        navTechnology: "Technologie",
-        navEngineering: "Ingénierie",
-        navApplications: "Applications",
-        navRoadmap: "Feuille de route",
-        navCollaborate: "Collaborer",
-
-        heroEyebrow:
-            "AÉROSPATIAL DEEP-TECH",
-
-        heroTitle1:
-            "Concevoir",
-
-        heroTitle2:
-            "des Structures Intelligentes",
-
-        heroTitle3:
-            "pour les futures missions aéronautiques et spatiales.",
-
-        heroDescription:
-            "Des structures aérospatiales adaptatives conçues pour réorienter automatiquement les charges mécaniques, redistribuer les contraintes et améliorer la survivabilité structurale.",
-
-        heroButton1:
-            "Découvrir la technologie",
-
-        heroButton2:
-            "Approche d'ingénierie",
-
-        heroStatus:
-            "INTELLIGENCE STRUCTURALE ADAPTATIVE",
-
-        scroll:
-            "FAIRE DÉFILER",
-
-        thesisLabel:
-            "THÈSE STRUCTURALE",
-
-        thesisTitle1:
-            "Et si une structure pouvait",
-
-        thesisTitle2:
-            "répondre à son propre chargement ?",
-
-        thesisParagraph1:
-            "Les structures aérospatiales conventionnelles sont conçues autour de chemins de charge prédéfinis. Lorsque ces chemins sont surchargés, la structure dépend principalement de marges passives et de mécanismes de confinement de la rupture.",
-
-        thesisParagraph2:
-            "Regenyx Aerospace explore un paradigme différent : des structures dont l'architecture peut répondre à l'évolution de l'état mécanique en activant des chemins de charge alternatifs et en redistribuant les sollicitations mécaniques.",
-
-        camlrFull:
-            "Mécanisme de routage métastable des charges activé par contrainte",
-
-        pttlrFull:
-            "Redistribution des charges déclenchée par transition de phase",
-
-        technologyLabel:
-            "TECHNOLOGIE CENTRALE",
-
-        technologyTitle1:
-            "L'intelligence mécanique",
-
-        technologyTitle2:
-            "intégrée à l'architecture.",
-
-        technologyIntro:
-            "Des architectures structurales hiérarchiques combinées à des mécanismes de transfert de charge dépendants de l'état mécanique.",
-
-        camlrSubtitle:
-            "Mécanisme de routage métastable des charges activé par contrainte",
-
-        camlrDescription:
-            "Un mécanisme structural dans lequel un état critique de contrainte active un chemin mécanique de charge alternatif.",
-
-        pttlrSubtitle:
-            "Redistribution des charges déclenchée par transition de phase",
-
-        pttlrDescription:
-            "Une transition d'état structural qui redistribue les sollicitations mécaniques à travers la hiérarchie.",
-
-        loadRouting:
-            "ROUTAGE DES CHARGES",
-
-        loadRedistribution:
-            "REDISTRIBUTION DES CHARGES",
-
-        mechanismLabel:
-            "MÉCANISME",
-
-        mechanismTitle1:
-            "De la charge appliquée",
-
-        mechanismTitle2:
-            "à la réponse adaptative.",
-
-        mechanism1Title:
-            "CHARGE",
-
-        mechanism1Text:
-            "Le chargement mécanique externe entre dans la hiérarchie structurale.",
-
-        mechanism2Title:
-            "ÉTAT CRITIQUE",
-
-        mechanism2Text:
-            "Une contrainte structurale approche de sa condition mécanique critique.",
-
-        mechanism3Title:
-            "TRANSITION",
-
-        mechanism3Text:
-            "L'architecture change son état mécanique actif.",
-
-        mechanism4Title:
-            "REDISTRIBUTION",
-
-        mechanism4Text:
-            "La sollicitation mécanique est redistribuée à travers des chemins structuraux alternatifs.",
-
-        simulationLabel:
-            "MODÈLE CONCEPTUEL INTERACTIF",
-
-        simulationTitle:
-            "Intelligence Mécanique",
-
-        simulationDescription:
-            "Explorez une représentation simplifiée du routage adaptatif des charges mécaniques.",
-
-        simulationWarning:
-            "MODÈLE CONCEPTUEL · PAS UN SOLVEUR VALIDÉ",
-
-        visualizationTitle:
-            "CHEMIN DE CHARGE STRUCTURAL",
-
-        constraint:
-            "CONTRAINTE",
-
-        primaryPathLabel:
-            "CHEMIN PRINCIPAL",
-
-        camlrPathLabel:
-            "CHEMIN CAMLR",
-
-        pttlrPathLabel:
-            "ÉTAT PTTLR",
-
-        legendPrimary:
-            "Principal",
-
-        legendCamlr:
-            "CAMLR",
-
-        legendPttlr:
-            "PTTLR",
-
-        controlsTitle:
-            "COMMANDES DE SIMULATION",
-
-        appliedLoad:
-            "CHARGE APPLIQUÉE",
-
-        camlrThreshold:
-            "SEUIL CAMLR",
-
-        pttlrSwitch:
-            "PTTLR",
-
-        pttlrSwitchDescription:
-            "Activer la redistribution par transition de phase",
-
-        reset:
-            "RÉINITIALISER",
-
-        liveReadout:
-            "LECTURE EN DIRECT",
-
-        state:
-            "ÉTAT",
-
-        primaryPath:
-            "CHEMIN PRINCIPAL",
-
-        camlrPath:
-            "CHEMIN CAMLR",
-
-        pttlrRedistribution:
-            "REDISTRIBUTION PTTLR",
-
-        eventLog:
-            "JOURNAL DES ÉVÉNEMENTS",
-
-        systemInitialized:
-            "SYSTÈME INITIALISÉ",
-
-        engineeringLabel:
-            "INGÉNIERIE COMPUTATIONNELLE",
-
-        engineeringTitle1:
-            "Conçu à travers",
-
-        engineeringTitle2:
-            "la physique, le calcul et la simulation.",
-
-        engineering1Title:
-            "MULTIPHYSIQUE",
-
-        engineering1Text:
-            "Couplage des comportements mécaniques, thermiques et liés à l'état des matériaux.",
-
-        engineering2Title:
-            "ANALYSE PAR ÉLÉMENTS FINIS",
-
-        engineering2Text:
-            "Réponse structurale, concentrations de contraintes, comportement non linéaire et évolution des dommages.",
-
-        engineering3Title:
-            "OPTIMISATION TOPOLOGIQUE",
-
-        engineering3Text:
-            "Génération computationnelle d'architectures hiérarchiques et de chemins de charge adaptatifs.",
-
-        engineering4Title:
-            "INTELLIGENCE MATÉRIAU",
-
-        engineering4Text:
-            "Systèmes de matériaux avancés conçus pour interagir avec l'architecture structurale.",
-
-        applicationsLabel:
-            "APPLICATIONS",
-
-        applicationsTitle1:
-            "Conçu pour les environnements",
-
-        applicationsTitle2:
-            "de vol les plus exigeants.",
-
-        application1Title:
-            "LANCEURS",
-
-        application1Text:
-            "Architectures structurales adaptatives pour les environnements de chargement extrêmes du lancement.",
-
-        application2Title:
-            "ENGINS SPATIAUX",
-
-        application2Text:
-            "Structures légères capables de gérer l'évolution des cas de charge pendant la mission.",
-
-        application3Title:
-            "SYSTÈMES AÉROSPATIAUX",
-
-        application3Text:
-            "Structures hiérarchiques conçues pour améliorer la tolérance aux dommages et la survivabilité.",
-
-        roadmapLabel:
-            "MATURATION TECHNOLOGIQUE",
-
-        roadmapTitle1:
-            "Du concept fondamental",
-
-        roadmapTitle2:
-            "à une technologie pertinente pour le vol.",
-
-        roadmap1Title:
-            "PRINCIPE FONDAMENTAL",
-
-        roadmap1Text:
-            "Établir les fondements physiques du routage adaptatif des charges.",
-
-        roadmap2Title:
-            "VALIDATION COMPUTATIONNELLE",
-
-        roadmap2Text:
-            "Modélisation numérique et simulation structurale.",
-
-        roadmap3Title:
-            "DÉMONSTRATION EXPÉRIMENTALE",
-
-        roadmap3Text:
-            "Démonstrateurs physiques et validation en laboratoire.",
-
-        contactLabel:
-            "COLLABORATION",
-
-        contactTitle1:
-            "Construisons ensemble",
-
-        contactTitle2:
-            "le prochain paradigme structural.",
-
-        contactText:
-            "Regenyx Aerospace développe des partenariats dans l'ingénierie aérospatiale, les matériaux avancés, la mécanique computationnelle et les systèmes spatiaux.",
-
-        contactButton:
-            "Démarrer une conversation",
-
-        footerText:
-            "Concevoir des structures intelligentes pour les futures missions aéronautiques et spatiales."
-
-    }
-
+   REGENYX AEROSPACE
+   MAIN.JS
+   ============================================================
+
+   CAML / PTTLR LIVE CONCEPTUAL ENGINEERING MODEL
+
+   IMPORTANT:
+   This is an interactive conceptual engineering visualization.
+   It is NOT a validated FEA solver and the displayed percentages
+   are visual load-routing proxies, not measured structural data.
+
+   MODEL SEQUENCE
+
+   APPLIED LOAD
+        ↓
+   COMMON STRUCTURAL PATH
+        ↓
+   CONSTRAINT UTILIZATION
+        ↓
+   CAML THRESHOLD
+        ↓
+   CAML LOAD ROUTING
+        ↓
+   PTTLR TRANSITION / REDISTRIBUTION
+
+============================================================ */
+
+
+/* ============================================================
+   GLOBAL HELPERS
+============================================================ */
+
+const $ = (id) => document.getElementById(id);
+
+const clamp = (value, min, max) => {
+    return Math.min(Math.max(value, min), max);
+};
+
+const smoothStep = (value) => {
+    const x = clamp(value, 0, 1);
+    return x * x * (3 - 2 * x);
+};
+
+const prefersReducedMotion = () => {
+    return window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 };
 
 
 /* ============================================================
-   REGENYX AEROSPACE — COMPLETE MAIN.JS
-   CAML / PTTLR LIVE CONCEPTUAL MODEL
-   ============================================================ */
-
-/* Keep the existing language dictionary, but add the simulation
-   interface labels used by the revised simulation controls. */
-Object.assign(translations.en, {
-    appliedForce: "APPLIED LOAD",
-    routingDecision: "LOAD ROUTING DECISION",
-    constraintUtilization: "CONSTRAINT UTILIZATION",
-    activeMechanism: "ACTIVE MECHANISM",
-    legendPrimary: "Primary load path",
-    legendCaml: "CAML rerouting",
-    legendPttlr: "PTTLR redistribution",
-    modelNote: "The model progressively changes load routing as constraint utilization reaches the CAML transition threshold.",
-    runCycle: "RUN LOAD RAMP",
-    engineeringReadout: "ENGINEERING READOUT",
-    currentLoadLabel: "APPLIED LOAD",
-    utilizationLabel: "CONSTRAINT UTILIZATION",
-    marginLabel: "REMAINING MARGIN",
-    mechanismLabel: "ACTIVE MECHANISM",
-    loadDistribution: "LOAD DISTRIBUTION",
-    controlsTitle: "SIMULATION CONTROLS",
-    appliedLoad: "APPLIED LOAD",
-    camlrThreshold: "CAML THRESHOLD",
-    pttlrSwitch: "PTTLR",
-    pttlrSwitchDescription: "Enable phase-transition redistribution",
-    reset: "RESET SIMULATION",
-    liveReadout: "LIVE READOUT",
-    state: "STATE",
-    primaryPath: "PRIMARY PATH",
-    camlrPath: "CAML PATH",
-    pttlrRedistribution: "PTTLR REDISTRIBUTION",
-    eventLog: "EVENT LOG"
-});
-
-Object.assign(translations.fr, {
-    appliedForce: "CHARGE APPLIQUÉE",
-    routingDecision: "DÉCISION DE ROUTAGE",
-    constraintUtilization: "UTILISATION DE LA CONTRAINTE",
-    activeMechanism: "MÉCANISME ACTIF",
-    legendPrimary: "Chemin de charge principal",
-    legendCaml: "Routage CAML",
-    legendPttlr: "Redistribution PTTLR",
-    modelNote: "Le modèle modifie progressivement le routage de charge lorsque l'utilisation de la contrainte atteint le seuil de transition CAML.",
-    runCycle: "LANCER LA RAMPE DE CHARGE",
-    engineeringReadout: "LECTURE TECHNIQUE",
-    currentLoadLabel: "CHARGE APPLIQUÉE",
-    utilizationLabel: "UTILISATION DE LA CONTRAINTE",
-    marginLabel: "MARGE RESTANTE",
-    mechanismLabel: "MÉCANISME ACTIF",
-    loadDistribution: "RÉPARTITION DE LA CHARGE",
-    controlsTitle: "COMMANDES DE SIMULATION",
-    appliedLoad: "CHARGE APPLIQUÉE",
-    camlrThreshold: "SEUIL CAML",
-    pttlrSwitch: "PTTLR",
-    pttlrSwitchDescription: "Activer la redistribution par transition de phase",
-    reset: "RÉINITIALISER LA SIMULATION",
-    liveReadout: "LECTURE EN DIRECT",
-    state: "ÉTAT",
-    primaryPath: "CHEMIN PRINCIPAL",
-    camlrPath: "CHEMIN CAML",
-    pttlrRedistribution: "REDISTRIBUTION PTTLR",
-    eventLog: "JOURNAL DES ÉVÉNEMENTS"
-});
-
-
-/* ============================================================
    GLOBAL STATE
-   ============================================================ */
+============================================================ */
 
-let currentLanguage = "en";
-let simulationInitialized = false;
+let currentLanguage =
+    localStorage.getItem("regenyx-language") || "en";
+
 let simulationAnimationFrame = null;
 
 
 /* ============================================================
-   HELPERS
-   ============================================================ */
-
-function prefersReducedMotion() {
-    return window.matchMedia &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-}
-
-function safeNumber(value, fallback) {
-    const number = Number(value);
-    return Number.isFinite(number) ? number : fallback;
-}
-
-
-/* ============================================================
    LANGUAGE
-   ============================================================ */
-
-function detectLanguage() {
-    const saved = localStorage.getItem("regenyx-language");
-
-    if (saved === "fr" || saved === "en") {
-        return saved;
-    }
-
-    const browserLanguage =
-        navigator.language || navigator.userLanguage || "en";
-
-    return browserLanguage.toLowerCase().startsWith("fr")
-        ? "fr"
-        : "en";
-}
-
-function applyLanguage(language) {
-    const dictionary = translations[language];
-    if (!dictionary) return;
-
-    currentLanguage = language;
-    document.documentElement.lang = language;
-
-    document.querySelectorAll("[data-i18n]").forEach(element => {
-        const key = element.dataset.i18n;
-        if (dictionary[key] !== undefined) {
-            element.textContent = dictionary[key];
-        }
-    });
-
-    document.querySelectorAll("[data-i18n-svg]").forEach(element => {
-        const key = element.dataset.i18nSvg;
-        if (dictionary[key] !== undefined) {
-            element.textContent = dictionary[key];
-        }
-    });
-
-    const indicator = document.getElementById("currentLanguage");
-    if (indicator) indicator.textContent = language.toUpperCase();
-
-    document.title = language === "fr"
-        ? "Regenyx Aerospace — Structures Intelligentes"
-        : "Regenyx Aerospace — Intelligent Structures";
-}
+============================================================ */
 
 function setGoogleLanguage(language) {
-    const target = String(language || "en").toLowerCase();
 
-    localStorage.setItem("regenyx-language", target);
+    const lang = String(language || "en").toLowerCase();
 
-    if (target === "en") {
-        document.cookie = "googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        document.cookie = "googtrans=;path=/;domain=" +
-            window.location.hostname +
+    currentLanguage = lang;
+
+    localStorage.setItem(
+        "regenyx-language",
+        lang
+    );
+
+    if (lang === "en") {
+
+        document.cookie =
+            "googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+        document.cookie =
+            "googtrans=;path=/;domain=" +
+            location.hostname +
             ";expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
     } else {
-        document.cookie = "googtrans=/en/" + target + ";path=/";
+
+        document.cookie =
+            `googtrans=/en/${lang};path=/`;
+
     }
 
-    window.location.reload();
+    location.reload();
 }
 
-function changeLanguage(language) {
-    const nativeLanguages = ["en", "fr"];
 
-    if (nativeLanguages.includes(language)) {
-        localStorage.setItem("regenyx-language", language);
-        applyLanguage(language);
+function initializeLanguage() {
+
+    const button = $("languageButton");
+    const menu = $("languageMenu");
+    const indicator = $("currentLanguage");
+
+    if (!button || !menu) {
         return;
     }
 
-    setGoogleLanguage(language);
-}
+    if (indicator) {
+        indicator.textContent =
+            currentLanguage.toUpperCase();
+    }
 
-function initializeLanguage() {
-    applyLanguage(detectLanguage());
+    if (button.dataset.ready === "true") {
+        return;
+    }
 
-    const button = document.getElementById("languageButton");
-    const menu = document.getElementById("languageMenu");
+    button.dataset.ready = "true";
 
-    if (!button || !menu) return;
+    button.addEventListener("click", (event) => {
 
-    if (button.dataset.languageReady === "true") return;
-    button.dataset.languageReady = "true";
-
-    button.addEventListener("click", event => {
         event.stopPropagation();
 
-        const open = !menu.classList.contains("open");
-        menu.classList.toggle("open", open);
-        button.setAttribute("aria-expanded", String(open));
+        const open =
+            !menu.classList.contains("open");
+
+        menu.classList.toggle(
+            "open",
+            open
+        );
+
+        button.setAttribute(
+            "aria-expanded",
+            String(open)
+        );
     });
 
-    menu.querySelectorAll("[data-language]").forEach(item => {
-        item.addEventListener("click", event => {
-            event.stopPropagation();
-            changeLanguage(item.dataset.language);
-            menu.classList.remove("open");
-            button.setAttribute("aria-expanded", "false");
-        });
+
+    menu.querySelectorAll(
+        "[data-language]"
+    ).forEach((item) => {
+
+        item.addEventListener(
+            "click",
+            (event) => {
+
+                event.stopPropagation();
+
+                const language =
+                    item.dataset.language || "en";
+
+                if (indicator) {
+
+                    indicator.textContent =
+                        language.toUpperCase();
+
+                }
+
+                menu.classList.remove(
+                    "open"
+                );
+
+                button.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                setGoogleLanguage(
+                    language
+                );
+            }
+        );
     });
 
-    document.addEventListener("click", event => {
-        if (!menu.contains(event.target) && event.target !== button) {
-            menu.classList.remove("open");
-            button.setAttribute("aria-expanded", "false");
+
+    document.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                !menu.contains(event.target) &&
+                event.target !== button
+            ) {
+
+                menu.classList.remove(
+                    "open"
+                );
+
+                button.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            }
         }
-    });
+    );
 }
 
 
 /* ============================================================
    HEADER
-   ============================================================ */
+============================================================ */
 
 function initializeHeader() {
-    const header = document.getElementById("siteHeader");
-    if (!header) return;
 
-    const update = () => {
-        header.classList.toggle("scrolled", window.scrollY > 30);
+    const header = $("siteHeader");
+
+    if (!header) {
+        return;
+    }
+
+    const updateHeader = () => {
+
+        header.classList.toggle(
+            "scrolled",
+            window.scrollY > 30
+        );
     };
 
-    update();
-    window.addEventListener("scroll", update, { passive: true });
+    updateHeader();
+
+    window.addEventListener(
+        "scroll",
+        updateHeader,
+        { passive: true }
+    );
 }
 
 
 /* ============================================================
-   NAVIGATION + MOBILE MENU
-   ============================================================ */
+   MOBILE NAVIGATION
+============================================================ */
+
+function closeMobileMenu() {
+
+    const menu = $("mobileMenu");
+    const button = $("mobileMenuButton");
+
+    if (menu) {
+        menu.classList.remove("open");
+    }
+
+    if (button) {
+
+        button.classList.remove("open");
+
+        button.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+    }
+}
+
 
 function initializeNavigation() {
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener("click", event => {
-            const targetId = link.getAttribute("href");
-            if (!targetId || targetId === "#") return;
 
-            const target = document.querySelector(targetId);
-            if (!target) return;
+    /*
+       Smooth scrolling for internal navigation
+    */
 
-            event.preventDefault();
-            target.scrollIntoView({
-                behavior: prefersReducedMotion() ? "auto" : "smooth",
-                block: "start"
-            });
+    document.querySelectorAll(
+        'a[href^="#"]'
+    ).forEach((link) => {
 
-            const mobileMenu = document.getElementById("mobileMenu");
-            const mobileButton = document.getElementById("mobileMenuButton");
+        link.addEventListener(
+            "click",
+            (event) => {
 
-            if (mobileMenu) mobileMenu.classList.remove("open");
-            if (mobileButton) {
-                mobileButton.classList.remove("open");
-                mobileButton.setAttribute("aria-expanded", "false");
+                const id =
+                    link.getAttribute("href");
+
+                if (!id || id === "#") {
+                    return;
+                }
+
+                const target =
+                    document.querySelector(id);
+
+                if (!target) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                target.scrollIntoView({
+                    behavior:
+                        prefersReducedMotion()
+                            ? "auto"
+                            : "smooth",
+                    block: "start"
+                });
+
+                closeMobileMenu();
             }
-        });
+        );
     });
 
-    const button = document.getElementById("mobileMenuButton");
-    const menu = document.getElementById("mobileMenu");
 
-    if (!button || !menu) return;
-    if (button.dataset.mobileReady === "true") return;
-    button.dataset.mobileReady = "true";
+    /*
+       Mobile menu
+    */
 
-    const close = () => {
-        menu.classList.remove("open");
-        button.classList.remove("open");
-        button.setAttribute("aria-expanded", "false");
-    };
+    const button =
+        $("mobileMenuButton");
 
-    button.addEventListener("click", event => {
-        event.stopPropagation();
-        const open = !menu.classList.contains("open");
-        menu.classList.toggle("open", open);
-        button.classList.toggle("open", open);
-        button.setAttribute("aria-expanded", String(open));
-    });
+    const menu =
+        $("mobileMenu");
 
-    menu.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", close);
-    });
+    if (
+        !button ||
+        !menu ||
+        button.dataset.ready === "true"
+    ) {
+        return;
+    }
 
-    document.addEventListener("click", event => {
-        if (!menu.contains(event.target) && event.target !== button) {
-            close();
+    button.dataset.ready = "true";
+
+
+    button.addEventListener(
+        "click",
+        (event) => {
+
+            event.stopPropagation();
+
+            const open =
+                !menu.classList.contains("open");
+
+            menu.classList.toggle(
+                "open",
+                open
+            );
+
+            button.classList.toggle(
+                "open",
+                open
+            );
+
+            button.setAttribute(
+                "aria-expanded",
+                String(open)
+            );
         }
+    );
+
+
+    menu.querySelectorAll(
+        "a"
+    ).forEach((link) => {
+
+        link.addEventListener(
+            "click",
+            closeMobileMenu
+        );
     });
 
-    window.addEventListener("resize", () => {
-        if (window.innerWidth > 768) close();
-    }, { passive: true });
+
+    document.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                !menu.contains(event.target) &&
+                event.target !== button
+            ) {
+
+                closeMobileMenu();
+            }
+        }
+    );
+
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            if (window.innerWidth > 768) {
+
+                closeMobileMenu();
+            }
+        },
+        { passive: true }
+    );
 }
 
 
 /* ============================================================
    REVEAL ANIMATIONS
-   ============================================================ */
+============================================================ */
 
 function initializeRevealAnimations() {
-    const elements = document.querySelectorAll(".reveal");
-    if (!elements.length) return;
 
-    if (prefersReducedMotion() || !("IntersectionObserver" in window)) {
-        elements.forEach(element => element.classList.add("visible"));
+    const elements =
+        document.querySelectorAll(
+            ".reveal"
+        );
+
+    if (!elements.length) {
         return;
     }
 
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-        });
-    }, {
-        threshold: 0.10,
-        rootMargin: "0px 0px -40px 0px"
-    });
 
-    elements.forEach(element => observer.observe(element));
+    if (
+        prefersReducedMotion() ||
+        !("IntersectionObserver" in window)
+    ) {
+
+        elements.forEach(
+            (element) => {
+
+                element.classList.add(
+                    "visible"
+                );
+            }
+        );
+
+        return;
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach(
+                    (entry) => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target.classList.add(
+                                "visible"
+                            );
+
+                            observer.unobserve(
+                                entry.target
+                            );
+                        }
+                    }
+                );
+
+            },
+            {
+                threshold: 0.1,
+                rootMargin:
+                    "0px 0px -40px 0px"
+            }
+        );
+
+
+    elements.forEach(
+        (element) => {
+
+            observer.observe(
+                element
+            );
+        }
+    );
 }
 
 
 /* ============================================================
-   VIDEO
-   ============================================================ */
+   HERO VIDEO
+============================================================ */
 
 function initializeVideo() {
-    const video = document.getElementById("heroVideo") || document.querySelector("video");
-    if (!video) return;
+
+    const video =
+        $("heroVideo") ||
+        document.querySelector(
+            "video"
+        );
+
+    if (!video) {
+        return;
+    }
+
 
     video.muted = true;
     video.autoplay = true;
     video.loop = true;
     video.playsInline = true;
 
-    video.setAttribute("muted", "");
-    video.setAttribute("autoplay", "");
-    video.setAttribute("loop", "");
-    video.setAttribute("playsinline", "");
 
-    const attemptPlay = () => {
-        const promise = video.play();
-        if (promise && typeof promise.catch === "function") {
-            promise.catch(() => {});
+    [
+        "muted",
+        "autoplay",
+        "loop",
+        "playsinline"
+    ].forEach(
+        (attribute) => {
+
+            video.setAttribute(
+                attribute,
+                ""
+            );
+        }
+    );
+
+
+    const playVideo = () => {
+
+        const promise =
+            video.play();
+
+        if (
+            promise &&
+            typeof promise.catch === "function"
+        ) {
+
+            promise.catch(
+                () => {}
+            );
         }
     };
 
-    attemptPlay();
-    video.addEventListener("loadeddata", attemptPlay, { once: true });
-    video.addEventListener("canplay", attemptPlay, { once: true });
 
-    document.addEventListener("visibilitychange", () => {
-        if (!document.hidden && video.paused) attemptPlay();
-    });
+    playVideo();
+
+
+    video.addEventListener(
+        "loadeddata",
+        playVideo,
+        { once: true }
+    );
+
+
+    video.addEventListener(
+        "canplay",
+        playVideo,
+        { once: true }
+    );
+
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if (
+                !document.hidden &&
+                video.paused
+            ) {
+
+                playVideo();
+            }
+        }
+    );
 }
 
 
 /* ============================================================
-   CAML / PTTLR SIMULATION
-   ============================================================
-
-   Conceptual behavior:
-
-   NORMAL
-      Applied load is comfortably below the CAML threshold.
-      100% of the conceptual load follows the primary path.
-
-   CONSTRAINT APPROACH
-      Load approaches the threshold.
-      The primary path remains active, while the constraint node
-      visually indicates that the architecture is approaching
-      its transition condition.
-
-   CAML ACTIVATION
-      Applied load reaches/exceeds the threshold.
-      CAML activates an alternate load path and transfers load
-      away from the conventional primary path.
-
-   PTTLR TRANSITION
-      With PTTLR enabled, the transferred load is distributed
-      hierarchically instead of simply switching from A to B.
-
-   This is intentionally a conceptual visualization, not a
-   finite-element solver or validated structural analysis.
-   ============================================================ */
+   SIMULATION
+============================================================ */
 
 function initializeSimulation() {
-    if (simulationInitialized) return;
 
-    const loadSlider = document.getElementById("loadSlider");
-    const thresholdSlider = document.getElementById("thresholdSlider");
-    const pttlrToggle = document.getElementById("pttlrToggle");
-    const resetButton = document.getElementById("resetButton");
-    const runCycleButton = document.getElementById("runCycleButton");
+    /*
+       Required controls
+    */
 
-    if (!loadSlider || !thresholdSlider || !pttlrToggle) {
-        console.warn("Regenyx simulation: controls not found.");
+    const loadSlider =
+        $("loadSlider");
+
+    const thresholdSlider =
+        $("thresholdSlider");
+
+    const pttlrToggle =
+        $("pttlrToggle");
+
+
+    /*
+       If the simulation controls aren't
+       present, safely exit.
+    */
+
+    if (
+        !loadSlider ||
+        !thresholdSlider ||
+        !pttlrToggle
+    ) {
+
+        console.warn(
+            "Regenyx simulation controls not found."
+        );
+
         return;
     }
 
-    const svgNS = "http://www.w3.org/2000/svg";
+
+    /* ========================================================
+       DOM REFERENCES
+    ======================================================== */
+
     const elements = {
-        loadDisplay: document.getElementById("loadDisplay"),
-        thresholdDisplay: document.getElementById("thresholdDisplay"),
-        state: document.getElementById("simulationState"),
-        stateReadout: document.getElementById("stateReadout"),
-        primaryReadout: document.getElementById("primaryReadout"),
-        camlrReadout: document.getElementById("camlrReadout"),
-        pttlrReadout: document.getElementById("pttlrReadout"),
-        currentLoad: document.getElementById("currentLoad"),
-        utilization: document.getElementById("constraintUtilization"),
-        reserveMargin: document.getElementById("reserveMargin"),
-        mechanism: document.getElementById("mechanismReadout"),
-        primaryBar: document.getElementById("primaryBar"),
-        camlBar: document.getElementById("camlBar"),
-        pttlrBar: document.getElementById("pttlrBar"),
-        svgLoadValue: document.getElementById("svgLoadValue"),
-        svgUtilization: document.getElementById("svgUtilization"),
-        svgMechanism: document.getElementById("svgMechanism"),
-        inboundPath: document.getElementById("inboundPath"),
-        decisionPath: document.getElementById("decisionPath"),
-        primaryPath: document.getElementById("primaryPath"),
-        camlrPath: document.getElementById("camlrPath"),
-        pttlrPath: document.getElementById("pttlrPath"),
-        criticalNode: document.getElementById("criticalNode"),
-        particles: document.getElementById("particles"),
-        container: document.getElementById("loadVisualization"),
-        eventLog: document.getElementById("eventLog")
+
+        loadDisplay:
+            $("loadDisplay"),
+
+        thresholdDisplay:
+            $("thresholdDisplay"),
+
+        simulationState:
+            $("simulationState"),
+
+        stateReadout:
+            $("stateReadout"),
+
+        currentLoad:
+            $("currentLoad"),
+
+        constraintUtilization:
+            $("constraintUtilization"),
+
+        reserveMargin:
+            $("reserveMargin"),
+
+        mechanismReadout:
+            $("mechanismReadout"),
+
+        primaryReadout:
+            $("primaryReadout"),
+
+        camlReadout:
+            $("camlrReadout"),
+
+        pttlrReadout:
+            $("pttlrReadout"),
+
+        primaryBar:
+            $("primaryBar"),
+
+        camlBar:
+            $("camlBar"),
+
+        pttlrBar:
+            $("pttlrBar"),
+
+        svgLoadValue:
+            $("svgLoadValue"),
+
+        svgUtilization:
+            $("svgUtilization"),
+
+        svgMechanism:
+            $("svgMechanism"),
+
+        inboundPath:
+            $("inboundPath"),
+
+        decisionPath:
+            $("decisionPath"),
+
+        primaryPath:
+            $("primaryPath"),
+
+        camlPath:
+            $("camlrPath"),
+
+        pttlrPath:
+            $("pttlrPath"),
+
+        criticalNode:
+            $("criticalNode"),
+
+        particles:
+            $("particles"),
+
+        eventLog:
+            $("eventLog"),
+
+        visualization:
+            $("loadVisualization")
     };
 
-    if (!elements.inboundPath || !elements.decisionPath ||
-        !elements.primaryPath || !elements.camlrPath ||
-        !elements.pttlrPath || !elements.particles) {
-        console.warn("Regenyx simulation: SVG elements are incomplete.");
+
+    /*
+       Verify required SVG paths
+    */
+
+    if (
+        !elements.inboundPath ||
+        !elements.decisionPath ||
+        !elements.primaryPath ||
+        !elements.camlPath ||
+        !elements.pttlrPath ||
+        !elements.particles
+    ) {
+
+        console.warn(
+            "Regenyx simulation SVG paths not found."
+        );
+
         return;
     }
 
-    simulationInitialized = true;
 
-    const model = {
-        defaultLoad: 40,
-        defaultThreshold: 65,
+    /* ========================================================
+       ENGINEERING MODEL PARAMETERS
+    ======================================================== */
+
+    const MODEL = {
+
+        /*
+           Distance from CAML threshold at which
+           the constraint begins visibly approaching
+           its transition condition.
+        */
+
         warningBand: 15,
-        particles: 36,
-        animationSpeed: 0.00024
+
+
+        /*
+           Maximum conceptual CAML routing share.
+        */
+
+        maximumCAML: 40,
+
+
+        /*
+           Maximum conceptual PTTLR redistribution.
+        */
+
+        maximumPTTLR: 35,
+
+
+        /*
+           Particle count.
+        */
+
+        particleCount: 36,
+
+
+        /*
+           Particle movement speed.
+        */
+
+        particleSpeed: 0.00018
     };
+
+
+    /* ========================================================
+       SIMULATION STATE
+    ======================================================== */
 
     const state = {
-        load: clamp(safeNumber(loadSlider.value, model.defaultLoad), 0, 100),
-        threshold: clamp(safeNumber(thresholdSlider.value, model.defaultThreshold), 20, 95),
-        pttlr: Boolean(pttlrToggle.checked),
-        name: "NORMAL",
-        mechanism: "PRIMARY",
-        primary: 100,
-        caml: 0,
-        pttlrPath: 0,
-        utilization: 0,
-        margin: 100,
-        transitionProgress: 0,
-        pathLengths: {
-            inbound: 0,
-            decision: 0,
-            primary: 0,
-            caml: 0,
-            pttlr: 0
-        },
-        particles: []
+
+        appliedLoad:
+            Number(loadSlider.value) || 40,
+
+        camlThreshold:
+            Number(thresholdSlider.value) || 65,
+
+        pttlrEnabled:
+            Boolean(pttlrToggle.checked),
+
+        stateName:
+            "NORMAL",
+
+        mechanism:
+            "PRIMARY LOAD PATH",
+
+        primaryShare:
+            100,
+
+        camlShare:
+            0,
+
+        pttlrShare:
+            0,
+
+        utilization:
+            0,
+
+        margin:
+            0,
+
+        activation:
+            0
     };
 
-    let previousState = null;
-    let cycleFrame = null;
-    let cycleRunning = false;
 
-    function measurePaths() {
-        [
-            ["inbound", elements.inboundPath],
-            ["decision", elements.decisionPath],
-            ["primary", elements.primaryPath],
-            ["caml", elements.camlrPath],
-            ["pttlr", elements.pttlrPath]
-        ].forEach(([name, path]) => {
-            try {
-                state.pathLengths[name] = path.getTotalLength();
-            } catch (error) {
-                state.pathLengths[name] = 0;
-            }
-        });
-    }
+    /* ========================================================
+       EVENT LOG STATE
+    ======================================================== */
 
-    function getModel() {
-        const load = clamp(state.load, 0, 100);
-        const threshold = clamp(state.threshold, 20, 95);
-        const warningStart = Math.max(0, threshold - model.warningBand);
+    let lastEventSignature = "";
 
-        state.utilization = threshold > 0
-            ? (load / threshold) * 100
-            : 100;
-        state.margin = Math.max(0, 100 - state.utilization);
 
-        if (load < warningStart) {
-            state.name = "NORMAL";
-            state.mechanism = "PRIMARY";
-            state.primary = 100;
-            state.caml = 0;
-            state.pttlrPath = 0;
-            state.transitionProgress = 0;
+    /* ========================================================
+       LOAD RAMP STATE
+    ======================================================== */
+
+    let loadRampRunning = false;
+    let loadRampFrame = null;
+
+
+    /* ========================================================
+       RUNTIME SIMULATION STYLES
+    ======================================================== */
+
+    function injectSimulationStyles() {
+
+        if (
+            $("regenyxSimulationRuntimeStyles")
+        ) {
+
             return;
         }
 
-        if (load < threshold) {
-            state.name = "CONSTRAINT APPROACH";
-            state.mechanism = "PRIMARY · APPROACHING THRESHOLD";
-            state.primary = 100;
-            state.caml = 0;
-            state.pttlrPath = 0;
-            state.transitionProgress = clamp(
-                (load - warningStart) / Math.max(threshold - warningStart, 1),
+
+        const style =
+            document.createElement(
+                "style"
+            );
+
+        style.id =
+            "regenyxSimulationRuntimeStyles";
+
+
+        style.textContent = `
+
+            #loadVisualization .path {
+
+                transition:
+                    opacity .25s ease,
+                    stroke-width .25s ease,
+                    filter .25s ease;
+            }
+
+
+            #loadVisualization
+            .path:not(.active) {
+
+                opacity: .12;
+            }
+
+
+            #loadVisualization
+            .path.active {
+
+                opacity: .95;
+            }
+
+
+            #loadVisualization
+            .path.approach-active {
+
+                opacity: .78;
+
+                filter:
+                    url(#pathGlow);
+            }
+
+
+            #loadVisualization
+            .path.caml-active {
+
+                filter:
+                    url(#pathGlow);
+            }
+
+
+            #loadVisualization
+            .path.pttlr-active {
+
+                filter:
+                    url(#pathGlow);
+            }
+
+
+            #loadVisualization
+            .load-particle {
+
+                fill: #b8ff2c;
+
+                filter:
+                    url(#particleGlow);
+            }
+
+
+            #loadVisualization
+            .load-particle.caml-particle {
+
+                fill: #dfff80;
+            }
+
+
+            #loadVisualization
+            .load-particle.pttlr-particle {
+
+                fill: #ffffff;
+            }
+
+
+            #loadVisualization
+            .critical-node {
+
+                transition:
+                    opacity .3s ease,
+                    transform .3s ease;
+            }
+
+
+            #loadVisualization[data-state="normal"]
+            .critical-node {
+
+                opacity: .25;
+            }
+
+
+            #loadVisualization[data-state="constraint-approach"]
+            .critical-node {
+
+                opacity: .9;
+            }
+
+
+            #loadVisualization[data-state="caml-active"]
+            .critical-node {
+
+                opacity: 1;
+            }
+
+
+            #loadVisualization[data-state="pttlr-active"]
+            .critical-node {
+
+                opacity: 1;
+            }
+
+
+            .simulation-run.running {
+
+                box-shadow:
+                    0 0 18px
+                    rgba(184,255,44,.28);
+            }
+
+        `;
+
+
+        document.head.appendChild(
+            style
+        );
+    }
+
+
+    /* ========================================================
+       CALCULATE ENGINEERING STATE
+    ======================================================== */
+
+    function calculateEngineeringState() {
+
+        /*
+           Read controls
+        */
+
+        state.appliedLoad =
+            clamp(
+                Number(loadSlider.value) || 0,
+                0,
+                100
+            );
+
+
+        state.camlThreshold =
+            clamp(
+                Number(thresholdSlider.value) || 65,
+                20,
+                95
+            );
+
+
+        state.pttlrEnabled =
+            Boolean(
+                pttlrToggle.checked
+            );
+
+
+        /*
+           Constraint utilization.
+
+           Example:
+
+           Load = 40
+           Threshold = 65
+
+           Utilization =
+           40 / 65 × 100
+           ≈ 61.5%
+        */
+
+        state.utilization =
+            (
+                state.appliedLoad /
+                state.camlThreshold
+            ) * 100;
+
+
+        /*
+           Remaining margin to CAML threshold.
+        */
+
+        state.margin =
+            state.camlThreshold -
+            state.appliedLoad;
+
+
+        /*
+           Warning region.
+
+           Example:
+
+           Threshold = 65
+
+           Warning starts at:
+
+           65 - 15 = 50
+        */
+
+        const warningStart =
+            Math.max(
+                0,
+                state.camlThreshold -
+                MODEL.warningBand
+            );
+
+
+        /*
+           Overload ratio.
+
+           0 =
+           exactly at threshold
+
+           1 =
+           maximum applied load
+        */
+
+        const overloadRatio =
+            clamp(
+                (
+                    state.appliedLoad -
+                    state.camlThreshold
+                ) /
+                Math.max(
+                    100 -
+                    state.camlThreshold,
+                    1
+                ),
                 0,
                 1
             );
-            return;
-        }
+
 
         /*
-         * Once utilization reaches 100%, CAML begins routing load.
-         * The transfer is continuous rather than an artificial on/off jump.
-         */
-        const transfer = clamp(
-            (load - threshold) / Math.max(100 - threshold, 1),
-            0,
-            1
-        );
-        state.transitionProgress = transfer;
+           Smooth transition variable.
+        */
 
-        if (!state.pttlr) {
-            state.name = "CAML ACTIVE";
-            state.mechanism = "CAML · LOAD REROUTING";
-            state.caml = Math.round(15 + (50 * transfer));
-            state.primary = 100 - state.caml;
-            state.pttlrPath = 0;
+        const transition =
+            smoothStep(
+                overloadRatio
+            );
+
+
+        /*
+           ----------------------------------------------------
+           STATE 1 — NORMAL
+           ----------------------------------------------------
+        */
+
+        if (
+            state.appliedLoad <
+            warningStart
+        ) {
+
+            state.stateName =
+                "NORMAL";
+
+            state.mechanism =
+                "PRIMARY LOAD PATH";
+
+            state.primaryShare =
+                100;
+
+            state.camlShare =
+                0;
+
+            state.pttlrShare =
+                0;
+
+            state.activation =
+                0;
+
             return;
         }
 
-        /* PTTLR adds a third destination and progressively increases its share. */
-        state.name = "PTTLR ACTIVE";
-        state.mechanism = "CAML + PTTLR · REDISTRIBUTION";
-        state.pttlrPath = Math.round(15 + (20 * transfer));
-        state.caml = Math.round(25 + (15 * transfer));
-        state.primary = 100 - state.caml - state.pttlrPath;
-    }
 
-    function setText(element, value) {
-        if (element) element.textContent = String(value);
-    }
+        /*
+           ----------------------------------------------------
+           STATE 2 — CONSTRAINT APPROACH
+           ----------------------------------------------------
+        */
 
-    function updateReadout() {
-        const load = Math.round(state.load);
-        const threshold = Math.round(state.threshold);
-        const utilization = Math.round(state.utilization);
-        const margin = Math.round(state.margin);
+        if (
+            state.appliedLoad <
+            state.camlThreshold
+        ) {
 
-        setText(elements.loadDisplay, load);
-        setText(elements.thresholdDisplay, threshold);
-        setText(elements.stateReadout, state.name);
-        setText(elements.primaryReadout, `${Math.round(state.primary)}%`);
-        setText(elements.camlrReadout, `${Math.round(state.caml)}%`);
-        setText(elements.pttlrReadout, `${Math.round(state.pttlrPath)}%`);
-        setText(elements.currentLoad, `${load}%`);
-        setText(elements.utilization, `${utilization}%`);
-        setText(elements.reserveMargin, `${margin}%`);
-        setText(elements.mechanism, state.mechanism);
-        setText(elements.svgLoadValue, `${load}%`);
-        setText(elements.svgUtilization, `${utilization}%`);
-        setText(elements.svgMechanism, state.mechanism);
+            state.stateName =
+                "CONSTRAINT APPROACH";
 
-        if (elements.state) {
-            elements.state.textContent = state.name;
-            elements.state.dataset.state = state.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+            state.mechanism =
+                "PRIMARY · CONSTRAINT LOADING";
+
+            state.primaryShare =
+                100;
+
+            state.camlShare =
+                0;
+
+            state.pttlrShare =
+                0;
+
+            /*
+               Visual activation of constraint.
+            */
+
+            state.activation =
+                clamp(
+                    (
+                        state.appliedLoad -
+                        warningStart
+                    ) /
+                    MODEL.warningBand,
+                    0,
+                    1
+                );
+
+            return;
         }
 
-        if (elements.container) {
-            elements.container.dataset.state = state.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-            elements.container.style.setProperty("--load-intensity", String(state.load / 100));
+
+        /*
+           ----------------------------------------------------
+           STATE 3 / 4 — THRESHOLD REACHED
+           ----------------------------------------------------
+
+           CAML activates.
+
+           We deliberately make the transition
+           progressive rather than an instantaneous
+           switch from 100% primary to another path.
+        */
+
+        state.activation =
+            transition;
+
+
+        /*
+           CAML share
+
+           At threshold:
+               approximately 15%
+
+           At maximum load:
+               40%
+        */
+
+        state.camlShare =
+            Math.round(
+                15 +
+                (
+                    MODEL.maximumCAML -
+                    15
+                ) *
+                transition
+            );
+
+
+        /*
+           ----------------------------------------------------
+           PTTLR OFF
+           ----------------------------------------------------
+        */
+
+        if (
+            !state.pttlrEnabled
+        ) {
+
+            state.stateName =
+                "CAML ACTIVE";
+
+            state.mechanism =
+                "CAML · ADAPTIVE LOAD ROUTING";
+
+            state.pttlrShare =
+                0;
+
+            state.primaryShare =
+                100 -
+                state.camlShare;
+
+            return;
         }
 
-        if (elements.primaryBar) elements.primaryBar.style.width = `${state.primary}%`;
-        if (elements.camlBar) elements.camlBar.style.width = `${state.caml}%`;
-        if (elements.pttlrBar) elements.pttlrBar.style.width = `${state.pttlrPath}%`;
+
+        /*
+           ----------------------------------------------------
+           PTTLR ON
+           ----------------------------------------------------
+
+           PTTLR progressively introduces an additional
+           redistribution route.
+
+           At CAML threshold:
+
+               PRIMARY ≈ 75%
+               CAML    ≈ 15%
+               PTTLR   ≈ 10%
+
+           At maximum load:
+
+               PRIMARY = 25%
+               CAML    = 40%
+               PTTLR   = 35%
+        */
+
+        state.pttlrShare =
+            Math.round(
+                10 +
+                (
+                    MODEL.maximumPTTLR -
+                    10
+                ) *
+                transition
+            );
+
+
+        state.primaryShare =
+            100 -
+            state.camlShare -
+            state.pttlrShare;
+
+
+        state.stateName =
+            "PTTLR ACTIVE";
+
+
+        state.mechanism =
+            "CAML + PTTLR · LOAD REDISTRIBUTION";
     }
 
-    function setPathState(path, active, type) {
-        if (!path) return;
-        path.classList.remove("active", "caml-active", "pttlr-active", "approach-active");
-        if (!active) return;
-        path.classList.add("active");
-        if (type === "caml") path.classList.add("caml-active");
-        if (type === "pttlr") path.classList.add("pttlr-active");
-        if (type === "approach") path.classList.add("approach-active");
-    }
 
-    function updateVisuals() {
-        getModel();
+    /* ========================================================
+       UPDATE TEXT READOUTS
+    ======================================================== */
 
-        const utilization = state.utilization;
-        const approaching = utilization >= 85 && utilization < 100;
-        const camlActive = state.caml > 0;
-        const pttlrActive = state.pttlrPath > 0;
+    function updateReadouts() {
 
-        setPathState(elements.inboundPath, true, "primary");
-        setPathState(elements.decisionPath, true, "primary");
-        setPathState(elements.primaryPath, state.primary > 0, "primary");
-        setPathState(elements.camlrPath, camlActive, "caml");
-        setPathState(elements.pttlrPath, pttlrActive, "pttlr");
+        const load =
+            Math.round(
+                state.appliedLoad
+            );
 
-        /* Path thickness is a visual proxy for relative load share. */
-        elements.primaryPath.style.strokeWidth = `${Math.max(3, 3 + (state.primary * 0.055))}`;
-        elements.camlrPath.style.strokeWidth = camlActive
-            ? `${Math.max(3, 3 + (state.caml * 0.065))}`
-            : "3";
-        elements.pttlrPath.style.strokeWidth = pttlrActive
-            ? `${Math.max(3, 3 + (state.pttlrPath * 0.07))}`
-            : "3";
+        const threshold =
+            Math.round(
+                state.camlThreshold
+            );
 
-        if (approaching) {
-            elements.primaryPath.classList.add("approach-active");
-            elements.decisionPath.classList.add("approach-active");
+        const utilization =
+            Math.round(
+                state.utilization
+            );
+
+        const margin =
+            Math.round(
+                state.margin
+            );
+
+
+        const setText =
+            (element, value) => {
+
+                if (element) {
+
+                    element.textContent =
+                        String(value);
+                }
+            };
+
+
+        /*
+           Main control values
+        */
+
+        setText(
+            elements.loadDisplay,
+            load
+        );
+
+
+        setText(
+            elements.thresholdDisplay,
+            threshold
+        );
+
+
+        /*
+           Main state
+        */
+
+        setText(
+            elements.simulationState,
+            state.stateName
+        );
+
+
+        setText(
+            elements.stateReadout,
+            state.stateName
+        );
+
+
+        /*
+           Engineering metrics
+        */
+
+        setText(
+            elements.currentLoad,
+            `${load}%`
+        );
+
+
+        setText(
+            elements.constraintUtilization,
+            `${utilization}%`
+        );
+
+
+        setText(
+            elements.reserveMargin,
+            margin >= 0
+                ? `${margin}%`
+                : `-${Math.abs(margin)}%`
+        );
+
+
+        setText(
+            elements.mechanismReadout,
+            state.mechanism
+        );
+
+
+        /*
+           Load distribution
+        */
+
+        setText(
+            elements.primaryReadout,
+            `${Math.round(
+                state.primaryShare
+            )}%`
+        );
+
+
+        setText(
+            elements.camlReadout,
+            `${Math.round(
+                state.camlShare
+            )}%`
+        );
+
+
+        setText(
+            elements.pttlrReadout,
+            `${Math.round(
+                state.pttlrShare
+            )}%`
+        );
+
+
+        /*
+           SVG readouts
+        */
+
+        setText(
+            elements.svgLoadValue,
+            `${load}%`
+        );
+
+
+        setText(
+            elements.svgUtilization,
+            `${utilization}%`
+        );
+
+
+        setText(
+            elements.svgMechanism,
+            state.mechanism
+        );
+
+
+        /*
+           Distribution bars
+        */
+
+        if (
+            elements.primaryBar
+        ) {
+
+            elements.primaryBar.style.width =
+                `${state.primaryShare}%`;
         }
 
-        if (elements.criticalNode) {
-            elements.criticalNode.classList.toggle("active", utilization >= 85);
-            elements.criticalNode.classList.toggle("transition", camlActive);
+
+        if (
+            elements.camlBar
+        ) {
+
+            elements.camlBar.style.width =
+                `${state.camlShare}%`;
         }
 
-        updateReadout();
-        updateParticleClasses();
-        logEvent();
+
+        if (
+            elements.pttlrBar
+        ) {
+
+            elements.pttlrBar.style.width =
+                `${state.pttlrShare}%`;
+        }
+
+
+        /*
+           State data attribute.
+
+           Used by CSS for visual transitions.
+        */
+
+        const stateKey =
+            state.stateName
+                .toLowerCase()
+                .replace(
+                    /[^a-z0-9]+/g,
+                    "-"
+                );
+
+
+        if (
+            elements.simulationState
+        ) {
+
+            elements.simulationState.dataset.state =
+                stateKey;
+        }
+
+
+        if (
+            elements.visualization
+        ) {
+
+            elements.visualization.dataset.state =
+                stateKey;
+
+
+            elements.visualization.style
+                .setProperty(
+                    "--load-intensity",
+                    state.appliedLoad / 100
+                );
+        }
     }
 
-    function logEvent(force = false) {
-        if (!elements.eventLog) return;
-        if (!force && previousState === state.name) return;
 
-        previousState = state.name;
-        const entry = document.createElement("div");
-        entry.className = "simulation-event";
+    /* ========================================================
+       UPDATE STRUCTURAL PATHS
+    ======================================================== */
 
-        const time = new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-        });
+    function updateStructuralPaths() {
 
-        const timeSpan = document.createElement("span");
-        timeSpan.className = "event-time";
-        timeSpan.textContent = time;
+        const paths = [
 
-        const stateSpan = document.createElement("span");
-        stateSpan.className = "event-state";
-        stateSpan.textContent = `${state.name} · P ${Math.round(state.primary)} / C ${Math.round(state.caml)} / T ${Math.round(state.pttlrPath)}`;
+            elements.inboundPath,
 
-        entry.append(timeSpan, stateSpan);
-        elements.eventLog.prepend(entry);
+            elements.decisionPath,
 
-        Array.from(elements.eventLog.children)
-            .slice(6)
-            .forEach(child => child.remove());
+            elements.primaryPath,
+
+            elements.camlPath,
+
+            elements.pttlrPath
+        ];
+
+
+        paths.forEach(
+            (path) => {
+
+                if (!path) {
+                    return;
+                }
+
+                path.classList.remove(
+                    "active",
+                    "approach-active",
+                    "caml-active",
+                    "pttlr-active"
+                );
+            }
+        );
+
+
+        /*
+           Incoming load path is always active.
+        */
+
+        elements.inboundPath.classList.add(
+            "active"
+        );
+
+
+        /*
+           Routing decision node is always
+           structurally present.
+        */
+
+        elements.decisionPath.classList.add(
+            "active"
+        );
+
+
+        /*
+           Determine whether we are approaching
+           the CAML transition.
+        */
+
+        const approaching =
+            state.appliedLoad >=
+            (
+                state.camlThreshold -
+                MODEL.warningBand
+            );
+
+
+        /*
+           CAML becomes active once threshold
+           is reached.
+        */
+
+        const camlActive =
+            state.appliedLoad >=
+            state.camlThreshold;
+
+
+        /*
+           Primary path
+        */
+
+        if (
+            state.primaryShare > 0
+        ) {
+
+            elements.primaryPath.classList.add(
+                "active"
+            );
+        }
+
+
+        /*
+           Constraint approach visual.
+        */
+
+        if (
+            approaching &&
+            !camlActive
+        ) {
+
+            elements.primaryPath.classList.add(
+                "approach-active"
+            );
+        }
+
+
+        /*
+           CAML path
+        */
+
+        if (
+            camlActive &&
+            state.camlShare > 0
+        ) {
+
+            elements.camlPath.classList.add(
+                "active",
+                "caml-active"
+            );
+        }
+
+
+        /*
+           PTTLR path
+        */
+
+        if (
+            state.pttlrEnabled &&
+            state.pttlrShare > 0
+        ) {
+
+            elements.pttlrPath.classList.add(
+                "active",
+                "pttlr-active"
+            );
+        }
+
+
+        /*
+           Path thickness is proportional
+           to relative load share.
+
+           This is a visual proxy.
+        */
+
+        elements.primaryPath.style.strokeWidth =
+            Math.max(
+                3,
+                3 +
+                state.primaryShare * 0.075
+            );
+
+
+        elements.camlPath.style.strokeWidth =
+            Math.max(
+                3,
+                3 +
+                state.camlShare * 0.10
+            );
+
+
+        elements.pttlrPath.style.strokeWidth =
+            Math.max(
+                3,
+                3 +
+                state.pttlrShare * 0.11
+            );
+
+
+        /*
+           Constraint node response
+        */
+
+        if (
+            elements.criticalNode
+        ) {
+
+            elements.criticalNode.classList.toggle(
+                "active",
+                approaching
+            );
+
+
+            elements.criticalNode.classList.toggle(
+                "transition",
+                camlActive
+            );
+
+
+            /*
+               SVG transform.
+            */
+
+            const scale =
+                1 +
+                state.activation *
+                0.18;
+
+
+            elements.criticalNode.style.transformOrigin =
+                "500px 270px";
+
+
+            elements.criticalNode.style.transform =
+                `scale(${scale})`;
+        }
     }
+
+
+    /* ========================================================
+       EVENT LOG
+    ======================================================== */
+
+    function updateEventLog() {
+
+        if (
+            !elements.eventLog
+        ) {
+
+            return;
+        }
+
+
+        const signature =
+            [
+                state.stateName,
+                Math.round(
+                    state.primaryShare
+                ),
+                Math.round(
+                    state.camlShare
+                ),
+                Math.round(
+                    state.pttlrShare
+                )
+            ].join("|");
+
+
+        if (
+            signature ===
+            lastEventSignature
+        ) {
+
+            return;
+        }
+
+
+        lastEventSignature =
+            signature;
+
+
+        const event =
+            document.createElement(
+                "div"
+            );
+
+
+        event.className =
+            "event active";
+
+
+        const dot =
+            document.createElement(
+                "i"
+            );
+
+
+        const text =
+            document.createElement(
+                "span"
+            );
+
+
+        /*
+           English / French event text.
+        */
+
+        const french =
+            currentLanguage.startsWith(
+                "fr"
+            );
+
+
+        const englishMessages = {
+
+            "NORMAL":
+                "PRIMARY LOAD PATH",
+
+            "CONSTRAINT APPROACH":
+                "CONSTRAINT APPROACHING TRANSITION",
+
+            "CAML ACTIVE":
+                "CAML ACTIVE · ADAPTIVE LOAD ROUTING",
+
+            "PTTLR ACTIVE":
+                "PTTLR ACTIVE · LOAD REDISTRIBUTION"
+        };
+
+
+        const frenchMessages = {
+
+            "NORMAL":
+                "CHEMIN PRINCIPAL",
+
+            "CONSTRAINT APPROACH":
+                "CONTRAINTE PROCHE DU SEUIL",
+
+            "CAML ACTIVE":
+                "CAML ACTIF · ROUTAGE ADAPTATIF",
+
+            "PTTLR ACTIVE":
+                "PTTLR ACTIF · REDISTRIBUTION"
+        };
+
+
+        text.textContent =
+            french
+                ? (
+                    frenchMessages[
+                        state.stateName
+                    ] ||
+                    state.stateName
+                )
+                : (
+                    englishMessages[
+                        state.stateName
+                    ] ||
+                    state.stateName
+                );
+
+
+        event.appendChild(
+            dot
+        );
+
+
+        event.appendChild(
+            text
+        );
+
+
+        elements.eventLog.prepend(
+            event
+        );
+
+
+        /*
+           Keep the event log compact.
+        */
+
+        while (
+            elements.eventLog.children.length >
+            6
+        ) {
+
+            elements.eventLog.lastElementChild.remove();
+        }
+    }
+
+
+    /* ========================================================
+       PARTICLE SYSTEM
+    ======================================================== */
+
+    const particles = [];
+
 
     function createParticles() {
-        elements.particles.innerHTML = "";
-        state.particles = [];
 
-        for (let i = 0; i < model.particles; i++) {
-            const particle = document.createElementNS(svgNS, "circle");
-            particle.classList.add("load-particle");
-            particle.setAttribute("r", i % 5 === 0 ? "3.4" : "2.5");
-            particle.dataset.index = String(i);
-            particle.dataset.seed = String(i / model.particles);
-            elements.particles.appendChild(particle);
-            state.particles.push(particle);
+        elements.particles.innerHTML =
+            "";
+
+
+        particles.length =
+            0;
+
+
+        for (
+            let i = 0;
+            i < MODEL.particleCount;
+            i++
+        ) {
+
+            const particle =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "circle"
+                );
+
+
+            particle.setAttribute(
+                "r",
+                i % 5 === 0
+                    ? "4"
+                    : "2.7"
+            );
+
+
+            particle.classList.add(
+                "load-particle"
+            );
+
+
+            elements.particles.appendChild(
+                particle
+            );
+
+
+            particles.push({
+
+                node:
+                    particle,
+
+                offset:
+                    i /
+                    MODEL.particleCount,
+
+                speed:
+                    MODEL.particleSpeed *
+                    (
+                        0.85 +
+                        Math.random() *
+                        0.30
+                    )
+            });
         }
     }
 
-    function routeForParticle(index) {
-        const ratio = index / Math.max(state.particles.length - 1, 1);
-        const camlShare = state.caml / 100;
-        const pttlrShare = state.pttlrPath / 100;
-        const primaryShare = state.primary / 100;
 
-        if (ratio < primaryShare) {
+    /* ========================================================
+       DETERMINE PARTICLE ROUTE
+    ======================================================== */
+
+    function getParticleRoute(
+        particleIndex
+    ) {
+
+        const ratio =
+            particleIndex /
+            Math.max(
+                MODEL.particleCount - 1,
+                1
+            );
+
+
+        const primary =
+            state.primaryShare /
+            100;
+
+
+        const caml =
+            state.camlShare /
+            100;
+
+
+        /*
+           Primary share first.
+        */
+
+        if (
+            ratio <
+            primary
+        ) {
+
             return {
-                name: "primary",
-                segments: [elements.inboundPath, elements.primaryPath],
-                speed: 1.0
+
+                path:
+                    elements.primaryPath,
+
+                type:
+                    "primary"
             };
         }
 
-        if (ratio < primaryShare + camlShare) {
+
+        /*
+           CAML share second.
+        */
+
+        if (
+            ratio <
+            primary +
+            caml
+        ) {
+
             return {
-                name: "caml",
-                segments: [elements.inboundPath, elements.decisionPath, elements.camlrPath],
-                speed: 1.05
+
+                path:
+                    elements.camlPath,
+
+                type:
+                    "caml"
             };
         }
 
-        if (pttlrShare > 0) {
+
+        /*
+           PTTLR share last.
+        */
+
+        if (
+            state.pttlrShare > 0
+        ) {
+
             return {
-                name: "pttlr",
-                segments: [elements.inboundPath, elements.decisionPath, elements.pttlrPath],
-                speed: 1.1
+
+                path:
+                    elements.pttlrPath,
+
+                type:
+                    "pttlr"
             };
         }
+
+
+        /*
+           Safety fallback.
+        */
 
         return {
-            name: "primary",
-            segments: [elements.inboundPath, elements.primaryPath],
-            speed: 1.0
+
+            path:
+                elements.primaryPath,
+
+            type:
+                "primary"
         };
     }
 
-    function getSegmentLengths(segments) {
-        return segments.map(path => {
-            try {
-                return path.getTotalLength();
-            } catch (error) {
-                return 0;
-            }
-        });
-    }
 
-    function pointAlongRoute(segments, lengths, progress) {
-        const total = lengths.reduce((sum, value) => sum + value, 0);
-        if (!total) return null;
+    /* ========================================================
+       PARTICLE ANIMATION
+    ======================================================== */
 
-        let distance = progress * total;
+    function animateParticles(
+        timestamp
+    ) {
 
-        for (let i = 0; i < segments.length; i++) {
-            const length = lengths[i];
-            if (distance <= length || i === segments.length - 1) {
-                try {
-                    return segments[i].getPointAtLength(clamp(distance, 0, length));
-                } catch (error) {
-                    return null;
-                }
-            }
-            distance -= length;
-        }
+        if (
+            !elements.inboundPath ||
+            !elements.decisionPath
+        ) {
 
-        return null;
-    }
-
-    function updateParticleClasses() {
-        state.particles.forEach((particle, index) => {
-            const route = routeForParticle(index);
-            particle.classList.remove("caml-particle", "pttlr-particle");
-            if (route.name === "caml") particle.classList.add("caml-particle");
-            if (route.name === "pttlr") particle.classList.add("pttlr-particle");
-            particle.setAttribute("visibility", "visible");
-        });
-    }
-
-    function animate(timestamp) {
-        const reduced = prefersReducedMotion();
-
-        state.particles.forEach((particle, index) => {
-            const route = routeForParticle(index);
-            const lengths = getSegmentLengths(route.segments);
-            const seed = safeNumber(particle.dataset.seed, index / model.particles);
-            const phase = reduced
-                ? ((seed * 0.82) + 0.08) % 1
-                : ((timestamp * model.animationSpeed * route.speed) + seed) % 1;
-
-            const point = pointAlongRoute(route.segments, lengths, phase);
-            if (!point) {
-                particle.setAttribute("visibility", "hidden");
-                return;
-            }
-
-            particle.setAttribute("visibility", "visible");
-            particle.setAttribute("cx", point.x);
-            particle.setAttribute("cy", point.y);
-
-            /* Particle intensity follows the applied load. */
-            particle.style.opacity = String(0.35 + (0.65 * (state.load / 100)));
-        });
-
-        if (!reduced) {
-            simulationAnimationFrame = requestAnimationFrame(animate);
-        }
-    }
-
-    function stopCycle() {
-        cycleRunning = false;
-        if (cycleFrame) {
-            cancelAnimationFrame(cycleFrame);
-            cycleFrame = null;
-        }
-        if (runCycleButton) {
-            runCycleButton.classList.remove("running");
-            runCycleButton.textContent = currentLanguage === "fr"
-                ? "LANCER LA RAMPE DE CHARGE"
-                : "RUN LOAD RAMP";
-        }
-    }
-
-    function runLoadCycle() {
-        if (cycleRunning) {
-            stopCycle();
             return;
         }
 
-        cycleRunning = true;
-        if (runCycleButton) {
-            runCycleButton.classList.add("running");
-            runCycleButton.textContent = currentLanguage === "fr" ? "ARRÊTER LA RAMPE" : "STOP LOAD RAMP";
-        }
 
-        const start = performance.now();
-        const duration = 9000;
-        const startLoad = 0;
-        const endLoad = 100;
+        const inboundLength =
+            elements.inboundPath
+                .getTotalLength();
 
-        function step(now) {
-            if (!cycleRunning) return;
 
-            const progress = clamp((now - start) / duration, 0, 1);
-            /* Smooth ramp: 0 → 100 → 0, so the activation and recovery are both visible. */
-            const cycleValue = progress < 0.65
-                ? progress / 0.65
-                : 1 - ((progress - 0.65) / 0.35);
-            const nextLoad = startLoad + (endLoad - startLoad) * clamp(cycleValue, 0, 1);
+        const decisionLength =
+            elements.decisionPath
+                .getTotalLength();
 
-            state.load = nextLoad;
-            loadSlider.value = String(Math.round(nextLoad));
-            updateVisuals();
 
-            if (progress < 1) {
-                cycleFrame = requestAnimationFrame(step);
-            } else {
-                stopCycle();
+        const primaryLength =
+            elements.primaryPath
+                .getTotalLength();
+
+
+        const camlLength =
+            elements.camlPath
+                .getTotalLength();
+
+
+        const pttlrLength =
+            elements.pttlrPath
+                .getTotalLength();
+
+
+        particles.forEach(
+            (particle, index) => {
+
+                /*
+                   Continuous particle cycle.
+                */
+
+                const cycle =
+                    (
+                        timestamp *
+                        particle.speed +
+                        particle.offset
+                    ) % 1;
+
+
+                const route =
+                    getParticleRoute(
+                        index
+                    );
+
+
+                let point;
+
+
+                /*
+                   PHASE 1
+
+                   Incoming load.
+                */
+
+                if (
+                    cycle <
+                    0.30
+                ) {
+
+                    const progress =
+                        cycle /
+                        0.30;
+
+
+                    point =
+                        elements.inboundPath
+                            .getPointAtLength(
+                                progress *
+                                inboundLength
+                            );
+                }
+
+
+                /*
+                   PHASE 2
+
+                   Constraint / routing node.
+                */
+
+                else if (
+                    cycle <
+                    0.46
+                ) {
+
+                    const progress =
+                        (
+                            cycle -
+                            0.30
+                        ) /
+                        0.16;
+
+
+                    point =
+                        elements.decisionPath
+                            .getPointAtLength(
+                                progress *
+                                decisionLength
+                            );
+                }
+
+
+                /*
+                   PHASE 3
+
+                   Selected load path.
+                */
+
+                else {
+
+                    const progress =
+                        (
+                            cycle -
+                            0.46
+                        ) /
+                        0.54;
+
+
+                    let pathLength;
+
+
+                    if (
+                        route.type ===
+                        "primary"
+                    ) {
+
+                        pathLength =
+                            primaryLength;
+
+                    } else if (
+                        route.type ===
+                        "caml"
+                    ) {
+
+                        pathLength =
+                            camlLength;
+
+                    } else {
+
+                        pathLength =
+                            pttlrLength;
+                    }
+
+
+                    point =
+                        route.path
+                            .getPointAtLength(
+                                clamp(
+                                    progress,
+                                    0,
+                                    1
+                                ) *
+                                pathLength
+                            );
+                }
+
+
+                /*
+                   Apply SVG position.
+                */
+
+                particle.node.setAttribute(
+                    "cx",
+                    point.x
+                );
+
+
+                particle.node.setAttribute(
+                    "cy",
+                    point.y
+                );
+
+
+                /*
+                   Particle visibility grows
+                   slightly with applied load.
+                */
+
+                particle.node.style.opacity =
+                    0.45 +
+                    state.appliedLoad *
+                    0.0055;
+
+
+                /*
+                   Route-specific particle appearance.
+                */
+
+                particle.node.classList.toggle(
+                    "caml-particle",
+                    route.type === "caml"
+                );
+
+
+                particle.node.classList.toggle(
+                    "pttlr-particle",
+                    route.type === "pttlr"
+                );
             }
+        );
+
+
+        if (
+            !prefersReducedMotion()
+        ) {
+
+            simulationAnimationFrame =
+                requestAnimationFrame(
+                    animateParticles
+                );
+        }
+    }
+
+
+    /* ========================================================
+       UPDATE SIMULATION
+    ======================================================== */
+
+    function updateSimulation() {
+
+        calculateEngineeringState();
+
+        updateReadouts();
+
+        updateStructuralPaths();
+
+        updateEventLog();
+    }
+
+
+    /* ========================================================
+       RESET
+    ======================================================== */
+
+    function resetSimulation() {
+
+        stopLoadRamp();
+
+
+        loadSlider.value =
+            "40";
+
+
+        thresholdSlider.value =
+            "65";
+
+
+        pttlrToggle.checked =
+            false;
+
+
+        lastEventSignature =
+            "";
+
+
+        if (
+            elements.eventLog
+        ) {
+
+            elements.eventLog.innerHTML =
+                "";
         }
 
-        cycleFrame = requestAnimationFrame(step);
+
+        updateSimulation();
     }
 
-    function reset() {
-        stopCycle();
-        loadSlider.value = String(model.defaultLoad);
-        thresholdSlider.value = String(model.defaultThreshold);
-        pttlrToggle.checked = false;
 
-        state.load = model.defaultLoad;
-        state.threshold = model.defaultThreshold;
-        state.pttlr = false;
-        previousState = null;
+    /* ========================================================
+       LOAD RAMP
+    ========================================================
 
-        updateVisuals();
-        logEvent(true);
+       The ramp intentionally passes through:
+
+       NORMAL
+          ↓
+       CONSTRAINT APPROACH
+          ↓
+       CAML ACTIVE
+          ↓
+       PTTLR ACTIVE if enabled
+          ↓
+       recovery
+    */
+
+    function stopLoadRamp() {
+
+        loadRampRunning =
+            false;
+
+
+        if (
+            loadRampFrame
+        ) {
+
+            cancelAnimationFrame(
+                loadRampFrame
+            );
+
+            loadRampFrame =
+                null;
+        }
+
+
+        const button =
+            $("runCycleButton");
+
+
+        if (button) {
+
+            button.classList.remove(
+                "running"
+            );
+
+
+            button.textContent =
+                currentLanguage.startsWith(
+                    "fr"
+                )
+                    ? "LANCER LA RAMPE DE CHARGE"
+                    : "RUN LOAD RAMP";
+        }
     }
 
-    function syncLoad() {
-        state.load = clamp(safeNumber(loadSlider.value, model.defaultLoad), 0, 100);
-        updateVisuals();
+
+    function runLoadRamp() {
+
+        /*
+           If already running,
+           stop it.
+        */
+
+        if (
+            loadRampRunning
+        ) {
+
+            stopLoadRamp();
+
+            return;
+        }
+
+
+        loadRampRunning =
+            true;
+
+
+        const button =
+            $("runCycleButton");
+
+
+        if (button) {
+
+            button.classList.add(
+                "running"
+            );
+
+
+            button.textContent =
+                currentLanguage.startsWith(
+                    "fr"
+                )
+                    ? "ARRÊTER LA RAMPE"
+                    : "STOP LOAD RAMP";
+        }
+
+
+        /*
+           12 second complete cycle.
+        */
+
+        const duration =
+            12000;
+
+
+        const startTime =
+            performance.now();
+
+
+        const animateRamp =
+            (currentTime) => {
+
+                if (
+                    !loadRampRunning
+                ) {
+
+                    return;
+                }
+
+
+                const elapsed =
+                    currentTime -
+                    startTime;
+
+
+                const progress =
+                    clamp(
+                        elapsed /
+                        duration,
+                        0,
+                        1
+                    );
+
+
+                /*
+                   0 → 55%
+
+                   Load increases
+                   0 → 100
+                */
+
+                let load;
+
+
+                if (
+                    progress <
+                    0.55
+                ) {
+
+                    const rise =
+                        progress /
+                        0.55;
+
+
+                    load =
+                        rise *
+                        100;
+
+                }
+
+
+                /*
+                   55 → 100%
+
+                   Load decreases
+                   100 → 0
+                */
+
+                else {
+
+                    const fall =
+                        (
+                            progress -
+                            0.55
+                        ) /
+                        0.45;
+
+
+                    load =
+                        (
+                            1 -
+                            fall
+                        ) *
+                        100;
+                }
+
+
+                loadSlider.value =
+                    String(
+                        Math.round(load)
+                    );
+
+
+                updateSimulation();
+
+
+                if (
+                    progress <
+                    1
+                ) {
+
+                    loadRampFrame =
+                        requestAnimationFrame(
+                            animateRamp
+                        );
+
+                } else {
+
+                    stopLoadRamp();
+                }
+            };
+
+
+        loadRampFrame =
+            requestAnimationFrame(
+                animateRamp
+            );
     }
 
-    function syncThreshold() {
-        state.threshold = clamp(safeNumber(thresholdSlider.value, model.defaultThreshold), 20, 95);
-        /* A threshold above the current load remains valid; the model simply stays below transition. */
-        updateVisuals();
-    }
 
-    loadSlider.addEventListener("input", syncLoad);
-    thresholdSlider.addEventListener("input", syncThreshold);
-    pttlrToggle.addEventListener("change", () => {
-        state.pttlr = Boolean(pttlrToggle.checked);
-        updateVisuals();
-    });
+    /* ========================================================
+       INITIALIZATION
+    ======================================================== */
 
-    if (resetButton) resetButton.addEventListener("click", reset);
-    if (runCycleButton) runCycleButton.addEventListener("click", runLoadCycle);
+    injectSimulationStyles();
 
     createParticles();
-    measurePaths();
-    updateVisuals();
 
-    if (prefersReducedMotion()) {
-        animate(0);
-    } else {
-        simulationAnimationFrame = requestAnimationFrame(animate);
+    updateSimulation();
+
+
+    /* ========================================================
+       CONTROL LISTENERS
+    ======================================================== */
+
+    loadSlider.addEventListener(
+        "input",
+        updateSimulation
+    );
+
+
+    thresholdSlider.addEventListener(
+        "input",
+        updateSimulation
+    );
+
+
+    pttlrToggle.addEventListener(
+        "change",
+        updateSimulation
+    );
+
+
+    const resetButton =
+        $("resetButton");
+
+
+    if (
+        resetButton
+    ) {
+
+        resetButton.addEventListener(
+            "click",
+            resetSimulation
+        );
     }
 
-    let resizeTimer = null;
-    window.addEventListener("resize", () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            measurePaths();
-            updateVisuals();
-        }, 150);
-    }, { passive: true });
+
+    const runCycleButton =
+        $("runCycleButton");
+
+
+    if (
+        runCycleButton
+    ) {
+
+        runCycleButton.addEventListener(
+            "click",
+            runLoadRamp
+        );
+    }
+
+
+    /* ========================================================
+       START PARTICLE ANIMATION
+    ======================================================== */
+
+    if (
+        prefersReducedMotion()
+    ) {
+
+        animateParticles(
+            0
+        );
+
+    } else {
+
+        simulationAnimationFrame =
+            requestAnimationFrame(
+                animateParticles
+            );
+    }
+
+
+    /* ========================================================
+       RESIZE
+    ======================================================== */
+
+    let resizeTimer;
+
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            clearTimeout(
+                resizeTimer
+            );
+
+
+            resizeTimer =
+                setTimeout(
+                    updateSimulation,
+                    120
+                );
+        },
+        { passive: true }
+    );
+
+
+    /* ========================================================
+       PUBLIC DEBUG API
+
+       Open browser console and use:
+
+       RegenyxSimulation.getState()
+
+       RegenyxSimulation.reset()
+
+       RegenyxSimulation.runLoadRamp()
+    ======================================================== */
 
     window.RegenyxSimulation = {
-        reset,
-        runLoadCycle,
-        getState: () => ({
-            load: Math.round(state.load),
-            threshold: Math.round(state.threshold),
-            pttlr: state.pttlr,
-            state: state.name,
-            mechanism: state.mechanism,
-            primaryPath: Math.round(state.primary),
-            camlPath: Math.round(state.caml),
-            pttlrRedistribution: Math.round(state.pttlrPath),
-            constraintUtilization: Math.round(state.utilization),
-            remainingMargin: Math.round(state.margin)
-        })
+
+        reset:
+            resetSimulation,
+
+        runLoadRamp:
+            runLoadRamp,
+
+        getState:
+            () => ({
+                appliedLoad:
+                    state.appliedLoad,
+
+                camlThreshold:
+                    state.camlThreshold,
+
+                pttlrEnabled:
+                    state.pttlrEnabled,
+
+                state:
+                    state.stateName,
+
+                mechanism:
+                    state.mechanism,
+
+                utilization:
+                    state.utilization,
+
+                margin:
+                    state.margin,
+
+                primary:
+                    state.primaryShare,
+
+                caml:
+                    state.camlShare,
+
+                pttlr:
+                    state.pttlrShare
+            })
     };
 }
 
 
 /* ============================================================
    FOOTER
-   ============================================================ */
+============================================================ */
 
 function initializeFooter() {
-    const year = new Date().getFullYear();
 
-    document.querySelectorAll("[data-current-year]").forEach(element => {
-        element.textContent = year;
-    });
+    const year =
+        new Date().getFullYear();
 
-    const currentYear = document.getElementById("currentYear");
-    if (currentYear) currentYear.textContent = year;
+
+    const currentYear =
+        $("currentYear");
+
+
+    if (
+        currentYear
+    ) {
+
+        currentYear.textContent =
+            String(year);
+    }
+
+
+    const footerYear =
+        $("footerYear");
+
+
+    if (
+        footerYear
+    ) {
+
+        footerYear.textContent =
+            String(year);
+    }
+
+
+    document.querySelectorAll(
+        "[data-current-year]"
+    ).forEach(
+        (element) => {
+
+            element.textContent =
+                String(year);
+        }
+    );
 }
 
 
 /* ============================================================
    SUCCESS POPUP
-   ============================================================ */
+============================================================ */
 
 function initializeSuccessPopup() {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("success") !== "true") return;
+
+    const parameters =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    if (
+        parameters.get(
+            "success"
+        ) !== "true"
+    ) {
+
+        return;
+    }
+
 
     const popup =
-        document.getElementById("success-popup") ||
-        document.getElementById("successPopup");
+        $("success-popup") ||
+        $("successPopup");
 
-    if (!popup) return;
 
-    popup.style.display = "flex";
-    popup.classList.add("visible");
+    if (
+        !popup
+    ) {
 
-    setTimeout(() => {
-        popup.classList.remove("visible");
-    }, 7000);
+        return;
+    }
+
+
+    popup.style.display =
+        "flex";
+
+
+    popup.classList.add(
+        "visible"
+    );
+
+
+    setTimeout(
+        () => {
+
+            popup.classList.remove(
+                "visible"
+            );
+
+        },
+        7000
+    );
 }
 
 
 /* ============================================================
-   GOOGLE TRANSLATE CALLBACK
-   ============================================================ */
+   GOOGLE TRANSLATE
+============================================================ */
 
-window.googleTranslateElementInit = function () {
-    if (!window.google || !google.translate) return;
+window.googleTranslateElementInit =
+    function () {
 
-    const element = document.getElementById("google_translate_element");
-    if (!element || element.dataset.initialized === "true") return;
+        if (
+            !window.google ||
+            !window.google.translate
+        ) {
 
-    element.dataset.initialized = "true";
+            return;
+        }
 
-    new google.translate.TranslateElement({
-        pageLanguage: "en",
-        includedLanguages:
-            "en,fr,de,es,it,pt,nl,pl,cs,sk,sl,hu,ro,bg,hr,sr,bs,mk,el,da,sv,no,fi,et,lv,lt,is,ga,mt,cy,ca,eu,gl,sq,be,ru,uk,tr,ar,fa",
-        autoDisplay: false
-    }, "google_translate_element");
-};
+
+        const container =
+            $("google_translate_element");
+
+
+        if (
+            !container ||
+            container.dataset.initialized ===
+            "true"
+        ) {
+
+            return;
+        }
+
+
+        container.dataset.initialized =
+            "true";
+
+
+        new google.translate.TranslateElement(
+
+            {
+
+                pageLanguage:
+                    "en",
+
+                includedLanguages:
+                    "en,fr,de,es,it,pt,nl,pl,cs,sk,sl,hu,ro,bg,hr,sr,bs,mk,el,da,sv,no,fi,et,lv,lt,is,ga,mt,cy,ca,eu,gl,sq,be,ru,uk,tr,ar,fa",
+
+                autoDisplay:
+                    false
+            },
+
+            "google_translate_element"
+        );
+    };
 
 
 /* ============================================================
-   DOM READY
-   ============================================================ */
+   START APPLICATION
+============================================================ */
 
-document.addEventListener("DOMContentLoaded", () => {
-    const initializers = [
-        ["language", initializeLanguage],
-        ["header", initializeHeader],
-        ["navigation", initializeNavigation],
-        ["reveal", initializeRevealAnimations],
-        ["video", initializeVideo],
-        ["simulation", initializeSimulation],
-        ["success popup", initializeSuccessPopup],
-        ["footer", initializeFooter]
-    ];
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    initializers.forEach(([name, initializer]) => {
-        try {
-            initializer();
-        } catch (error) {
-            console.error(`Regenyx ${name} initialization error:`, error);
-        }
-    });
-}, { once: true });
+        const initializers = [
+
+            initializeLanguage,
+
+            initializeHeader,
+
+            initializeNavigation,
+
+            initializeRevealAnimations,
+
+            initializeVideo,
+
+            initializeSimulation,
+
+            initializeSuccessPopup,
+
+            initializeFooter
+        ];
+
+
+        initializers.forEach(
+            (initializer) => {
+
+                try {
+
+                    initializer();
+
+                } catch (error) {
+
+                    console.error(
+                        "Regenyx initialization error:",
+                        error
+                    );
+                }
+            }
+        );
+
+    },
+    {
+        once: true
+    }
+);
